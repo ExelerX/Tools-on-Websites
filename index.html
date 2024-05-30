@@ -93,7 +93,7 @@
             for (let i = 0; i < input.length; i++) {
                 const char = input[i].toLowerCase();
                 if (char >= 'a' && char <= 'z') {
-                    result += char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
+                    result += (char.charCodeAt(0) - 96).toString(); // 'a' = 1, 'b' = 2, ..., 'z' = 26
                 } else if (char === ' ') {
                     result += '0'; // Leerzeichen = 0
                 } else {

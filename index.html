@@ -11,115 +11,29 @@
             padding: 20px;
             background-color: #f4f4f4;
             color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
             text-align: center;
         }
-        textarea {
-            width: 100%;
-            height: 100px;
+        h1 {
             margin-bottom: 20px;
-            padding: 10px;
-            font-size: 16px;
         }
-        select, button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        select {
-            background-color: #ddd;
-        }
-        button {
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .output {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            text-decoration: none;
             border-radius: 5px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+        }
+        a:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Math Speech Übersetzer</h1>
-        <textarea id="inputText" placeholder="Geben Sie den Text ein..."></textarea>
-        <select id="mode">
-            <option value="textToNumbers">Text zu Zahlen</option>
-            <option value="numbersToText">Zahlen zu Text</option>
-        </select>
-        <button onclick="translate()">Übersetzen</button>
-        <div id="output" class="output"></div>
-    </div>
-
-    <script>
-        function translate() {
-            const input = document.getElementById('inputText').value;
-            const mode = document.getElementById('mode').value;
-            let output = '';
-
-            if (mode === 'textToNumbers') {
-                output = textToNumbers(input);
-            } else if (mode === 'numbersToText') {
-                output = numbersToText(input);
-            }
-
-            document.getElementById('output').innerText = output;
-        }
-
-        function textToNumbers(input) {
-            let result = '';
-            for (let i = 0; i < input.length; i++) {
-                const char = input[i].toLowerCase();
-                if (char >= 'a' && char <= 'z') {
-                    result += (char.charCodeAt(0) - 96).toString(); // 'a' = 1, 'b' = 2, ..., 'z' = 26
-                } else if (char === ' ') {
-                    result += '0'; // Leerzeichen = 0
-                } else {
-                    result += char; // andere Zeichen bleiben unverändert
-                }
-                if (i < input.length - 1) {
-                    result += ', ';
-                }
-            }
-            return result;
-        }
-
-        function numbersToText(input) {
-            const numbers = input.split(',').map(num => num.trim());
-            let result = '';
-            for (let num of numbers) {
-                if (num >= '1' && num <= '26') {
-                    result += String.fromCharCode(parseInt(num) + 96); // 1 = 'a', 2 = 'b', ..., 26 = 'z'
-                } else if (num === '0') {
-                    result += ' '; // 0 = Leerzeichen
-                } else {
-                    result += num; // andere Zeichen bleiben unverändert
-                }
-            }
-            return result;
-        }
-    </script>
+    <h1>Willkommen zum Math Speech Übersetzer</h1>
+    <p>Wählen Sie die gewünschte Übersetzungsrichtung:</p>
+    <a href="zahl-zu-buchstabe.html">Zahl zu Buchstabe</a>
+    <a href="buchstabe-zu-zahl.html">Buchstabe zu Zahl</a>
 </body>
 </html>

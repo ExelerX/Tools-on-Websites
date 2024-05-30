@@ -1,39 +1,208 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Speech Übersetzer</title>
+    <title>Letter to Number & Math Speech Translator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f4f4f4;
             color: #333;
-            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         h1 {
             margin-bottom: 20px;
         }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
-        a:hover {
+        select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        select {
+            background-color: #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
             background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <h1>Willkommen zum Math Speech Übersetzer</h1>
-    <p>Wählen Sie die gewünschte Übersetzungsrichtung:</p>
-    <a href="zahl-zu-buchstabe.html">Zahl zu Buchstabe</a>
-    <a href="buchstabe-zu-zahl.html">Buchstabe zu Zahl</a>
+    <div class="container">
+        <h1 id="title">Letter to Number & Math Speech Translator</h1>
+        <select id="language" onchange="setLanguage()">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+        </select>
+        <h2 id="letterToNumberTitle">Letter to Number Translator</h2>
+        <label for="inputText" id="inputLabel">Enter letters:</label>
+        <input type="text" id="inputText" placeholder="Enter letters...">
+        <button onclick="translateLetterToNumber()" id="translateButton">Translate</button>
+        <div id="outputLetter" class="output">OUTPUT</div>
+
+        <h2 id="mathSpeechTitle">Math Speech Translator</h2>
+        <label for="inputMathSpeech" id="inputMathLabel">Enter math speech or numbers (e.g., "a = 1, b = 2, ..." or "1, 2, ..."):</label>
+        <textarea id="inputMathSpeech" placeholder="Enter math speech or numbers..."></textarea>
+        <button onclick="translateMathSpeech()" id="translateMathButton">Translate</button>
+        <div id="outputMath" class="output">OUTPUT</div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Letter to Number & Math Speech Translator",
+                letterToNumberTitle: "Letter to Number Translator",
+                inputLabel: "Enter letters:",
+                translateButton: "Translate",
+                mathSpeechTitle: "Math Speech Translator",
+                inputMathLabel: 'Enter math speech or numbers (e.g., "a = 1, b = 2, ..." or "1, 2, ..."):',
+                translateMathButton: "Translate",
+                output: "OUTPUT"
+            },
+            de: {
+                title: "Buchstaben zu Zahlen & Math Speech Übersetzer",
+                letterToNumberTitle: "Buchstaben zu Zahlen Übersetzer",
+                inputLabel: "Buchstaben eingeben:",
+                translateButton: "Übersetzen",
+                mathSpeechTitle: "Math Speech Übersetzer",
+                inputMathLabel: 'Math Speech oder Zahlen eingeben (z.B., "a = 1, b = 2, ..." oder "1, 2, ..."):',
+                translateMathButton: "Übersetzen",
+                output: "AUSGABE"
+            },
+            es: {
+                title: "Traductor de Letras a Números y Math Speech",
+                letterToNumberTitle: "Traductor de Letras a Números",
+                inputLabel: "Introduce letras:",
+                translateButton: "Traducir",
+                mathSpeechTitle: "Traductor de Math Speech",
+                inputMathLabel: 'Introduce Math Speech o números (ej., "a = 1, b = 2, ..." o "1, 2, ..."):',
+                translateMathButton: "Traducir",
+                output: "SALIDA"
+            },
+            fr: {
+                title: "Traducteur de Lettres en Nombres & Math Speech",
+                letterToNumberTitle: "Traducteur de Lettres en Nombres",
+                inputLabel: "Entrez des lettres :",
+                translateButton: "Traduire",
+                mathSpeechTitle: "Traducteur de Math Speech",
+                inputMathLabel: 'Entrez Math Speech ou des nombres (par ex., "a = 1, b = 2, ..." ou "1, 2, ..."):',
+                translateMathButton: "Traduire",
+                output: "SORTIE"
+            },
+            it: {
+                title: "Traduttore di Lettere in Numeri & Math Speech",
+                letterToNumberTitle: "Traduttore di Lettere in Numeri",
+                inputLabel: "Inserisci lettere:",
+                translateButton: "Traduci",
+                mathSpeechTitle: "Traduttore di Math Speech",
+                inputMathLabel: 'Inserisci Math Speech o numeri (es., "a = 1, b = 2, ..." o "1, 2, ..."):',
+                translateMathButton: "Traduci",
+                output: "OUTPUT"
+            }
+        };
+
+        function setLanguage() {
+            const language = document.getElementById('language').value;
+            document.getElementById('title').innerText = translations[language].title;
+            document.getElementById('letterToNumberTitle').innerText = translations[language].letterToNumberTitle;
+            document.getElementById('inputLabel').innerText = translations[language].inputLabel;
+            document.getElementById('translateButton').innerText = translations[language].translateButton;
+            document.getElementById('mathSpeechTitle').innerText = translations[language].mathSpeechTitle;
+            document.getElementById('inputMathLabel').innerText = translations[language].inputMathLabel;
+            document.getElementById('translateMathButton').innerText = translations[language].translateMathButton;
+            document.getElementById('outputLetter').innerText = translations[language].output;
+            document.getElementById('outputMath').innerText = translations[language].output;
+        }
+
+        function translateLetterToNumber() {
+            const inputText = document.getElementById('inputText').value.toLowerCase();
+            let output = '';
+
+            for (let i = 0; i < inputText.length; i++) {
+                const char = inputText[i];
+                if (char >= 'a' && char <= 'z') {
+                    const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
+                    output += number.toString();
+                } else if (char === ' ') {
+                    output += '0'; // Space = 0
+                } else {
+                    output += char; // Other characters remain unchanged
+                }
+
+                if (i < inputText.length - 1) {
+                    output += ', ';
+                }
+            }
+
+            document.getElementById('outputLetter').innerText = output ? `Translated numbers: ${output}` : translations[document.getElementById('language').value].output;
+        }
+
+        function translateMathSpeech() {
+            const inputMathSpeech = document.getElementById('inputMathSpeech').value;
+            const elements = inputMathSpeech.split(',').map(el => el.trim());
+            let output = '';
+
+            elements.forEach(element => {
+                if (element.includes('=')) {
+                    const [letter, number] = element.split('=').map(el => el.trim());
+                    if (letter && number) {
+                        output += `${letter} = ${number}, `;
+                    }
+                } else {
+                    const numbers = element.split(' ').map(el => el.trim());
+                    numbers.forEach(num => {
+                        if (!isNaN(num) && num !== '') {
+                            const char = String.fromCharCode(parseInt(num) + 96); // 1 = 'a', 2 = 'b', ..., 26 = 'z'
+                            output += char;
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('outputMath').innerText = output ? `Translated text: ${output}` : translations[document.getElementById('language').value].output;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(); // Set the default language on load
+        });
+    </script>
 </body>
 </html>

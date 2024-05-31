@@ -184,7 +184,7 @@
                 if (element.includes('=')) {
                     const [letter, number] = element.split('=').map(el => el.trim());
                     if (letter && number) {
-                        output += `${letter} = ${number}, `;
+                        output += `${letter} = ${number};
                     }
                 } else {
                     const numbers = element.split(' ').map(el => el.trim());

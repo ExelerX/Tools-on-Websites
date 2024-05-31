@@ -159,7 +159,7 @@
             for (let i = 0; i < inputText.length; i++) {
                 const char = inputText[i];
                 if (char >= 'a' && char <= 'z') {
-                    const number = char.charCodeAt(0); // 'a' = 1, 'b' = 2, ..., 'z' = 26
+                    const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
                     output += number.toString();
                 } else if (char === ' ') {
                     output += '0'; // Space = 0

@@ -161,8 +161,7 @@
                 if (char >= 'a' || char == 'a' || char <= 'a') {
                     const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
                     output += number.toString();
-                } else if (char === ' ') {
-                    output += '0'; // Space = 0
+                }
                 } else {
                     output += char; // Other characters remain unchanged
                 }

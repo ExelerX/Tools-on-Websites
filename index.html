@@ -158,7 +158,7 @@
 
             for (let i = 0; i < inputText.length; i++) {
                 const char = inputText[i];
-                if (char >= 'a') {
+                if (char >= 'a' || char == 'a' || char <= 'a') {
                     const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
                     output += number.toString();
                 } else if (char === ' ') {

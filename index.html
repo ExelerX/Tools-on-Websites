@@ -157,11 +157,10 @@
             let output = '';
 
             for (let i = 0; i < inputText.length; i++) {
-                const char = inputText[i];
-                if (char >= 'a') {
-                    const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
-                    output += number.toString();
-                } else if (char === ' ') {
+                const char = inputText[i]
+                const number = char.charCodeAt(0) - 96; // 'a' = 1, 'b' = 2, ..., 'z' = 26
+                output += number.toString();
+                if (char === ' ') {
                     output += '0'; // Space = 0
                 } else {
                     output += char; // Other characters remain unchanged

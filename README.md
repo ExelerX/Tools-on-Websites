@@ -1,8 +1,8 @@
-## Link: https://ccallesmacher.github.io/Math-Speech/
-### `Creepy Link: https://ccallesmacher.github.io/Math-Speech/creepy`
+## Link: https://ccallesmacher.github.io/Letter-to-Number-Number-to-Letter/
+### `Creepy Link: https://ccallesmacher.github.io/Letter-to-Number-Number-to-Letter/creepy`
 ----------
 # ***`Other Websites:`***
-Website Spam: https://ccallesmacher.github.io/Math-Speech/Window_Spam.html `its Realy open realy fast windows in the Browser!!! can be auto disabled by browser!!!`
+Website Spam: https://ccallesmacher.github.io/Letter-to-Number-Number-to-Letter/Window_Spam.html `its Realy open realy fast windows in the Browser!!! can be auto disabled by browser!!!`
 
 -----------
 

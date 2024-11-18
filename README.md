@@ -1,7 +1,7 @@
 ## Links for tools: 
 ***`--------------------------------`***
 ### ***`Letter to Number:`***
-https://ccallesmacher.github.io/Tools-Websites/LettertoNumber
+https://ccallesmacher.github.io/Tools-Websites/LettertoNumber.html
 
 Creepy Version V.1: https://ccallesmacher.github.io/Tools-Websites/Lettertonumber.html
 

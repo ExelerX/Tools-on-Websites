@@ -13,7 +13,7 @@ Origin: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNu
 
 Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
 
- <code style="color : red">!!!WARNING!!!</code>
+# <code style="color : red">WARNING</code>
 
 `All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`
 

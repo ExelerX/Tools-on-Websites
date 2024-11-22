@@ -7,7 +7,7 @@ https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 
 
-### ***Letter to Number:***
+# ***Letter to Number:***
 
 Origin: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
 

@@ -1,6 +1,5 @@
-## Links for the Websites and Tools: 
+# Links for the Websites and Tools: 
 
----
 
 ### ***Minecraft Resource Pack Combiner***
 

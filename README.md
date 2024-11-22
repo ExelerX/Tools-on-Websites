@@ -11,6 +11,9 @@ Creepy Version V.5.3: https://ccallesmacher.github.io/Tools-Websites/LettertoNum
 
    ↳ Broken but Newer: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html
 
+# !!!WARNING!!!
+
+## All Creepy versions from V.5.2 to newer can potentially trigger epilepsy
 
 ***`--------------------------------`***
 ## ***` Prank Links:`***

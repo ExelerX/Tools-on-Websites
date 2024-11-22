@@ -1,6 +1,11 @@
 ## Links for tools: 
 ***`--------------------------------`***
-### ***`Letter to Number:`***
+### ***` Minecraft Resource Pack Combiner`***
+
+https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
+`Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
+
+### ***` Letter to Number:`***
 Origin: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
 
 Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
@@ -22,9 +27,9 @@ Creepy Version V.5.3: https://ccallesmacher.github.io/Tools-Websites/LettertoNum
 
 Website Spam: https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html
 
-`It's really open really fast windows in the Browser!!! can be auto disabled by browser!!!`
+`It's opening really fast windows in the Browser!!! can be auto disabled by your browser!!!`
 
 
 
 
-#### Made by _CCAllesmacher_
+#### Made by ___CCAllesmacher___

@@ -1,6 +1,6 @@
-## Links for tools: 
+## Links for the Websites and Tools: 
 
-### ***Minecraft Resource Pack Combiner***
+# ***Minecraft Resource Pack Combiner***
 
 https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
 
@@ -24,7 +24,7 @@ Creepy Version V.5.3: https://ccallesmacher.github.io/Tools-Websites/LettertoNum
    ↳ Broken but Newer: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html
 
 
-## ***` Prank Links:`***
+# ***Prank Links:***
 
 ### ***` NOT RECOMMENDED`***
 

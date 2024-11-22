@@ -15,6 +15,9 @@ Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/Letterto
 
 <span style="color:red">!!!WARNING!!!</span>
 
+<font color="blue">Dies ist blauer Text</font>
+
+
 
 
 `All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`

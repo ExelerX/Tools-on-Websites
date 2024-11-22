@@ -1,7 +1,7 @@
 ## Links for tools: 
 ***`--------------------------------`***
 ### ***`Letter to Number:`***
-https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
+Origim: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
 
 Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
 

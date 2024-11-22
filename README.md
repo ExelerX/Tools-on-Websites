@@ -14,7 +14,6 @@ Origin: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNu
 Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
 
 <span style="color:red">!!!WARNING!!!</span>
-<font color="blue">Dies ist blauer Text</font>
 
 
 

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-y: scroll; /* Scrollbar aktiviert */
+            transition: all 0.5s ease;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            margin-bottom: 15px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #glitchOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: lime;
+            font-family: monospace;
+            z-index: 9999;
+            pointer-events: none;
+            animation: glitchAnim 0.1s infinite;
+        }
+        @keyframes glitchAnim {
+            0% { clip-path: inset(10% 0 85% 0); transform: skew(5deg); }
+            25% { clip-path: inset(40% 0 40% 0); transform: translate(-5px, 5px); }
+            50% { clip-path: inset(20% 0 70% 0); transform: skew(-5deg); }
+            75% { clip-path: inset(60% 0 30% 0); transform: translate(5px, -5px); }
+            100% { clip-path: inset(15% 0 75% 0); transform: skew(0deg); }
+        }
+        #blackScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100000%;
+            height: 100000%;
+			high: 100000%;
+            background-color: black;
+            display: none;
+            z-index: 10000;
+        }
+        #creepyImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 11000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="mainTitle">Interactive Translator</h1>
+
+        <!-- Letter to Number Translator -->
+        <h2 id="letterToNumberTitle">Letter to Number Translator</h2>
+        <input type="text" id="letterInput" placeholder="Enter letters, numbers, or symbols...">
+        <button id="letterButton" onclick="letterToNumber()">Translate to Numbers</button>
+        <div id="letterOutput" class="output">Output will appear here</div>
+
+        <!-- Number to Letter Translator -->
+        <h2 id="numberToLetterTitle">Number to Letter Translator</h2>
+        <input type="text" id="numberInput" placeholder="Enter numbers (e.g., 1, 2, 3)...">
+        <button id="numberButton" onclick="numberToLetter()">Translate to Letters</button>
+        <div id="numberOutput" class="output">Output will appear here</div>
+
+    </div>
+
+    <audio id="backgroundMusic" src="music.mp3" preload="auto" loop></audio>
+    <audio id="creepySound" src="creepy_sound.mp3" preload="auto"></audio>
+    <audio id="finalSound" src="final_sound.mp3" preload="auto"></audio>
+    <div id="glitchOverlay">ERROR 404<br>LOADING...<br>UNSTABLE SYSTEM DETECTED...</div>
+    <div id="blackScreen"></div>
+    <img src="creepy_image.jpg" id="creepyImage" alt="Creepy Image">
+
+    <script>
+        const creepyTexts = ["RUN", "HIDE", "NO ESCAPE", "IT'S TOO LATE", "DON'T LOOK BACK"];
+
+        function letterToNumber() {
+            const input = document.getElementById('letterInput').value;
+            let output = '';
+            for (let char of input) {
+                if (char.match(/[a-zA-Z]/)) {
+                    output += `${char.toLowerCase().charCodeAt(0) - 96}, `;
+                } else if (char.match(/[^a-zA-Z0-9]/)) {
+                    output += `${char.charCodeAt(0)}, `;
+                } else if (char.match(/[0-9]/)) {
+                    output += `${char}, `;
+                }
+            }
+            document.getElementById('letterOutput').innerText = output.trim();
+        }
+
+        function numberToLetter() {
+            const input = document.getElementById('numberInput').value.split(',');
+            let output = '';
+            for (let num of input) {
+                const charCode = parseInt(num.trim());
+                if (!isNaN(charCode) && charCode > 0) {
+                    if (charCode >= 97 && charCode <= 122) { // Lowercase
+                        output += String.fromCharCode(charCode);
+                    } else if (charCode >= 65 && charCode <= 90) { // Uppercase
+                        output += String.fromCharCode(charCode);
+                    } else {
+                        output += `?`;
+                    }
+                }
+            }
+            document.getElementById('numberOutput').innerText = output;
+        }
+
+        function startGlitch() {
+            const glitchOverlay = document.getElementById('glitchOverlay');
+            glitchOverlay.style.display = 'block';
+            setInterval(() => {
+                document.body.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+            }, 50);
+            setInterval(() => {
+                document.body.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+            }, 100);
+        }
+
+        function replaceTextRandomly() {
+            const elementsToReplace = [
+                document.getElementById('mainTitle'),
+                document.getElementById('letterToNumberTitle'),
+                document.getElementById('numberToLetterTitle'),
+                document.getElementById('footerText'),
+                document.getElementById('letterButton'),
+                document.getElementById('numberButton'),
+                document.getElementById('letterOutput'),
+                document.getElementById('numberOutput')
+            ];
+
+            elementsToReplace.forEach(element => {
+                if (Math.random() > 0.5) {
+                    element.innerText = creepyTexts[Math.floor(Math.random() * creepyTexts.length)];
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const music = document.getElementById('backgroundMusic');
+            const blackScreen = document.getElementById('blackScreen');
+            const creepyImage = document.getElementById('creepyImage');
+            const creepySound = document.getElementById('creepySound');
+            const finalSound = document.getElementById('finalSound');
+
+            setTimeout(() => music.play(), 30000); // Start music after 30s
+
+            setTimeout(() => {
+                startGlitch();
+                setInterval(replaceTextRandomly, 200); // Text replacement every 200ms during glitch
+            }, 45000); // Start glitch after 45s
+
+            setTimeout(() => {
+                music.pause();
+                blackScreen.style.display = 'block';
+                setTimeout(() => {
+                    creepyImage.style.display = 'block';
+                    creepySound.play();
+                    setTimeout(() => {
+                        finalSound.play();
+                        setTimeout(() => window.close(), 5000); // Close after 5s
+                    }, 2000); // Play final sound after 2s
+                }, 2000);
+            }, 60000); // Black screen after 60s
+        });
+    </script>
+</body>
+</html>

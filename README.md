@@ -1,9 +1,9 @@
 # Links for the Websites and Tools: 
 
 
-### ***Minecraft Resource Pack Combiner***
+### <font color="green">***Minecraft Resource Pack Combiner***</font> 
 
-https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
+<font color="green">[Creepy Version V.5.3:](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</font> 
 
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 
@@ -15,7 +15,7 @@ https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
 
 <font color="yellow">Origin:</font> https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
 
-Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
+<font color="grey">Jumpscrare Version V1.2::</font>  https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
 
 
 # <font color="red">!!!WARNING!!!</font>

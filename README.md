@@ -1,9 +1,7 @@
 # Links for the Websites and Tools: 
 
 
-### <font color="green">***Minecraft Resource Pack Combiner***</font> 
-
-<font color="green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</font> 
+### <font color="green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</font> 
 
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 

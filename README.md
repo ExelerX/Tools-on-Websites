@@ -1,4 +1,4 @@
-# <span style="gold">Links for the Websites and for the Tools:</span>
+# <font color="gold">Links for the Websites and for the Tools:</font>
 
 
 ### <span style="green">***Minecraft Resource Pack Combiner***</span>
@@ -8,8 +8,8 @@
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 
 ---
-
-### <font style="green">***Letter to Number:***</font>
+<span style="green">***Letter to Number:***
+### <span style="green">***Letter to Number:***</span>
 
 
 <span style="yellow">[Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)</span> 
@@ -42,4 +42,4 @@
 
 ---
 
-#### <font style="gold">Made by ___CCAllesmacher___</font>
+#### <font color="gold">Made by ___CCAllesmacher___</font>

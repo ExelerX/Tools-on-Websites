@@ -9,7 +9,7 @@
 
 ---
 
-### <span style="green">***Letter to Number:***</span>
+### <font style="green">***Letter to Number:***</font>
 
 
 <span style="yellow">[Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)</span> 
@@ -42,4 +42,4 @@
 
 ---
 
-#### <span style="gold">Made by ___CCAllesmacher___</span>
+#### <font style="gold">Made by ___CCAllesmacher___</font>

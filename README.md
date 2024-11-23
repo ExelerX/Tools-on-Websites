@@ -3,7 +3,7 @@
 
 ### <font color="green">***Minecraft Resource Pack Combiner***</font> 
 
-<font color="green">[Creepy Version V.5.3:](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</font> 
+<font color="green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</font> 
 
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 

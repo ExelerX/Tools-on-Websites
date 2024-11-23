@@ -141,10 +141,11 @@ combineButton.addEventListener('click', async () => {
     }
 
     const selectedVersion = versionSelect.value;
-    const packFormat = versionPackFormatMap[selectedVersion] || 18; // Fallback auf 18
+    const packFormat = versionPackFormatMap[selectedVersion] || 18;
 
     const zip = new JSZip();
 
+    // Füge Dateien aus allen Resourcepacks hinzu
     for (const file of filesArray) {
         try {
             const loadedZip = await JSZip.loadAsync(file);
@@ -159,7 +160,7 @@ combineButton.addEventListener('click', async () => {
     }
 
     try {
-        // Standardmäßige pack.mcmeta-Datei erstellen
+        // pack.mcmeta erstellen
         const mcmetaContent = {
             pack: {
                 pack_format: packFormat,
@@ -174,21 +175,19 @@ combineButton.addEventListener('click', async () => {
 
         zip.file('pack.mcmeta', JSON.stringify(mcmetaContent, null, 2));
 
-        // Generiere die ZIP-Datei und lade sie sofort herunter
+        // Generiere die ZIP-Datei
         const content = await zip.generateAsync({ type: 'blob' });
-        const url = URL.createObjectURL(content);
 
         // Automatischer Download
         const a = document.createElement('a');
-        a.href = url;
+        a.href = URL.createObjectURL(content);
         a.download = 'combined-resourcepack.zip';
-        a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
 
         // URL freigeben
-        URL.revokeObjectURL(url);
+        URL.revokeObjectURL(a.href);
     } catch (error) {
         console.error('Fehler beim Erstellen der ZIP-Datei:', error);
     }

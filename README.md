@@ -1,7 +1,7 @@
 # <font color="gold">Links for the Websites and for the Tools:</font>
 
 
-### <font color="green">***Minecraft Resource Pack Combiner***</font>
+### <font color="green">Minecraft Resource Pack Combiner</font>
 
 ### [Resource Pack Combiner V.1.0](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)
 
@@ -9,7 +9,7 @@
 
 ---
 
-### <font color="green">***Letter to Number:***</font>
+### <font color="green">Letter to Number:</font>
 
 
 [Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)
@@ -30,9 +30,9 @@
 
 ---
 
-### <font color="green">***Prank Links:***</font>
+### <font color="green">Prank Links:</font>
 
-#### <font color="orange">***`NOT RECOMMENDED`***</font>
+#### <font color="orange">NOT RECOMMENDED</font>
 
 [Website Spam](https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html)
 

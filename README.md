@@ -8,7 +8,7 @@
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 
 ---
-<span style="green">***Letter to Number:***
+
 ### <span style="green">***Letter to Number:***</span>
 
 

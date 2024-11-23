@@ -5,8 +5,6 @@
 
 #### [Resource Pack Combiner V.1.0](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)
 
-[Resource Pack Combiner V.1.0](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)
-
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 
 ---

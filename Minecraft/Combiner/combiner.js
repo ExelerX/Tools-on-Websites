@@ -164,7 +164,7 @@ combineButton.addEventListener('click', async () => {
             pack: {
                 pack_format: packFormat,
                 description: [
-                    { text: "Resourcepack ", color: "blue" },
+                    { text: "Resource pack ", color: "blue" },
                     { text: "combiner", color: "green" },
                     { text: "\nby ", color: "red" },
                     { text: "Allesmacher", color: "yellow" }

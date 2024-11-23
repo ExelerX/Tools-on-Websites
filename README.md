@@ -1,6 +1,5 @@
 # <span style="gold">Links for the Websites and for the Tools:</span>
 
----
 
 ### <span style="green">***Minecraft Resource Pack Combiner***</span>
 

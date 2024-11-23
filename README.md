@@ -17,6 +17,7 @@ Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/Letterto
 
 
 # <font color="red">!!!WARNING!!!</font>
+<span style="color:red">!!!WARNING!!!</span>
 
 
 

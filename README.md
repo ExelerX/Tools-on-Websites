@@ -1,4 +1,4 @@
-# Links for the Websites and Tools: 
+# <span style="gold">Links for the Websites and for the Tools:</span>
 
 
 ### <span style="color:green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</span> 

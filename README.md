@@ -7,7 +7,7 @@
 
 ---
 
-### <span style="green">***Letter to Number:***</font>
+### <span style="green">***Letter to Number:***</span>
 
 
 <span style="yellow">[Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)</span> 
@@ -15,7 +15,7 @@
 <span style="grey">[Jumpscrare Version V1.2](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html)</span>
 
 
-# <span style="red">!!!WARNING!!!</font>
+# <span style="red">!!!WARNING!!!</span>
 
 
 `All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`
@@ -28,11 +28,11 @@
 
 ---
 
-### <span style="green">***Prank Links:***</font>
+### <span style="green">***Prank Links:***</span>
 
-#### <span style="orange">***`NOT RECOMMENDED`***</font>
+#### <span style="orange">***`NOT RECOMMENDED`***</span>
 
-<span style="red">[Website Spam](https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html)</font>
+<span style="red">[Website Spam](https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html)</span>
 
 `It's opening really fast windows in the Browser!!! can be auto disabled by your browser!!!`
 
@@ -40,4 +40,4 @@
 
 ---
 
-#### <span style="gold">Made by ___CCAllesmacher___</font>
+#### <span style="gold">Made by ___CCAllesmacher___</span>

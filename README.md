@@ -2,7 +2,6 @@
 
 
 ### <span style="color:green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</span> 
-### <span style="color:green">[Minecraft Resource Pack Combiner](https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html)</span>
 
 `Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
 

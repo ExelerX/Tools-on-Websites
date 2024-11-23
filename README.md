@@ -10,7 +10,7 @@
 ### <span style="green">***Letter to Number:***</font>
 
 
-<span style="yellow">[Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)</font> 
+<span style="yellow">[Origin](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html)</span> 
 
 <span style="grey">[Jumpscrare Version V1.2](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html)</span>
 
@@ -20,11 +20,11 @@
 
 `All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`
 
-<span style="red">[Creepy Version V.5.2](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.2/anti-virus.html)</font> 
+<span style="red">[Creepy Version V.5.2](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.2/anti-virus.html)</span> 
    
-<span style="red">[Creepy Version V.5.3](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/anti-virus.html)</font> 
+<span style="red">[Creepy Version V.5.3](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/anti-virus.html)</span> 
 
-   ↳ <span style="red">[Broken but Newer (V.5.4)](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html)</font> 
+   ↳ <span style="red">[Broken but Newer (V.5.4)](https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html)</span> 
 
 ---
 

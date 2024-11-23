@@ -9,9 +9,11 @@ https://ccallesmacher.github.io/Tools-Websites/Combiner/Combiner.html
 
 ---
 
-### ***Letter to Number:***
+### <font color="green">***Letter to Number:***</font>
 
-Origin: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
+
+
+<font color="yellow">Origin:</font> https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/LettertoNumber.html
 
 Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/Lettertonumber.html
 
@@ -21,19 +23,19 @@ Jumpscrare Version V1.2: https://ccallesmacher.github.io/Tools-Websites/Letterto
 
 `All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`
 
-Creepy Version V.5.2: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.2/anti-virus.html
+<font color="red">Creepy Version V.5.2:</font> https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.2/anti-virus.html
    
-Creepy Version V.5.3: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/anti-virus.html
+<font color="red">Creepy Version V.5.3:</font> https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/anti-virus.html
 
-   ↳ Broken but Newer: https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html
+   ↳ Broken but Newer (V.5.4): https://ccallesmacher.github.io/Tools-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html
 
 ---
 
-### ***Prank Links:***
+### <font color="green">***Prank Links:***</font>
 
-#### ***` NOT RECOMMENDED`***
+#### <font color="orange">***` NOT RECOMMENDED`***</font>
 
-Website Spam: https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html
+<font color="red">Website Spam:</font> https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html
 
 `It's opening really fast windows in the Browser!!! can be auto disabled by your browser!!!`
 
@@ -41,4 +43,4 @@ Website Spam: https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_
 
 ---
 
-#### Made by ___CCAllesmacher___
+#### <font color="gold">Made by ___CCAllesmacher___</font>

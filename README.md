@@ -30,7 +30,7 @@
 
 ### <font color="green">***Prank Links:***</font>
 
-#### <font color="orange">***` NOT RECOMMENDED`***</font>
+#### <font color="orange">***`NOT RECOMMENDED`***</font>
 
 <font color="red">[Website Spam](https://ccallesmacher.github.io/Tools-Websites/Prank-Links/Window_Spam.html)</font>
 

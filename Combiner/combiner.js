@@ -141,7 +141,7 @@ combineButton.addEventListener('click', async () => {
     }
 
     const selectedVersion = versionSelect.value;
-    const packFormat = versionPackFormatMap[selectedVersion];
+    const packFormat = versionPackFormatMap[selectedVersion] || 18; // Fallback auf 18
 
     const zip = new JSZip();
 
@@ -159,15 +159,36 @@ combineButton.addEventListener('click', async () => {
     }
 
     try {
-        zip.file('pack.mcmeta', JSON.stringify({
+        // Standardmäßige pack.mcmeta-Datei erstellen
+        const mcmetaContent = {
             pack: {
                 pack_format: packFormat,
-                description: `Kombiniertes Resourcepack für Minecraft ${selectedVersion}`
+                description: [
+                    { text: "Resource Pack ", color: "blue" },
+                    { text: "Combiner", color: "green" },
+                    { text: "\nby ", color: "red" },
+                    { text: "Allesmacher", color: "yellow" }
+                ]
             }
-        }));
+        };
 
+        zip.file('pack.mcmeta', JSON.stringify(mcmetaContent, null, 2));
+
+        // Generiere die ZIP-Datei und lade sie sofort herunter
         const content = await zip.generateAsync({ type: 'blob' });
-        saveAs(content, 'combined-resourcepack.zip');
+        const url = URL.createObjectURL(content);
+
+        // Automatischer Download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'combined-resourcepack.zip';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // URL freigeben
+        URL.revokeObjectURL(url);
     } catch (error) {
         console.error('Fehler beim Erstellen der ZIP-Datei:', error);
     }

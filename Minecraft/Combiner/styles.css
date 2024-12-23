@@ -50,6 +50,10 @@ body.dark-mode .container {
     transition: background-color 0.3s;
 }
 
+.file-item img[alt="No Preview"] {
+    opacity: 0.5;
+}
+
 body.dark-mode .file-item {
     background-color: #3c3c3c;
     border-color: var(--border-color-dark);

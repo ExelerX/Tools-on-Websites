@@ -1,3 +1,4 @@
+// Updated combiner.js with fixes and improvements
 const fileInput = document.getElementById('fileInput');
 const fileList = document.getElementById('fileList');
 const combineButton = document.getElementById('combineButton');
@@ -9,9 +10,9 @@ let previews = {};
 
 // Versions-Mapping (Version → pack_format)
 const versionPackFormatMap = {
-    "1.6.1 - 1.8.9": 1,
-    "1.9 - 1.10.2": 2,
-    "1.11 - 1.12.2": 3,
+    "1.6.1 – 1.8.9": 1,
+    "1.9 – 1.10.2": 2,
+    "1.11 – 1.12.2": 3,
     "1.13 - 1.14.4": 4,
     "1.15 - 1.16.1": 5,
     "1.16.2 - 1.16.5": 6,
@@ -19,9 +20,10 @@ const versionPackFormatMap = {
     "1.18 - 1.18.2": 8,
     "1.19 - 1.19.2": 9,
     "1.19.3": 12,
-    "1.19.4 - 1.20.1": 13,
-    "1.20.2": 14,
-    "1.21 - 1.21.3": 15
+    "1.19.4": 13,
+    "1.20 – 1.20.1": 15,
+    "1.20.2": 18,
+    "1.20.3 - 1.20.4": 22
 };
 
 // Dropdown mit Versionen füllen
@@ -81,7 +83,7 @@ async function loadPreviews() {
                 previews[file.name] = null;
             }
         } catch (error) {
-            console.error(`Fehler beim Lesen von ${file.name}:`, error);
+            alert(`Fehler beim Lesen von ${file.name}: ${error.message}`);
         }
     }
 }
@@ -141,11 +143,10 @@ combineButton.addEventListener('click', async () => {
     }
 
     const selectedVersion = versionSelect.value;
-    const packFormat = versionPackFormatMap[selectedVersion] || 18;
+    const packFormat = versionPackFormatMap[selectedVersion] || 22; // Fallback auf 22
 
     const zip = new JSZip();
 
-    // Füge Dateien aus allen Resourcepacks hinzu
     for (const file of filesArray) {
         try {
             const loadedZip = await JSZip.loadAsync(file);
@@ -155,12 +156,12 @@ combineButton.addEventListener('click', async () => {
                 }
             });
         } catch (error) {
-            console.error(`Fehler beim Laden von ${file.name}:`, error);
+            alert(`Fehler beim Laden von ${file.name}: ${error.message}`);
         }
     }
 
     try {
-        // pack.mcmeta erstellen
+        // Standardmäßige pack.mcmeta-Datei erstellen
         const mcmetaContent = {
             pack: {
                 pack_format: packFormat,
@@ -175,20 +176,22 @@ combineButton.addEventListener('click', async () => {
 
         zip.file('pack.mcmeta', JSON.stringify(mcmetaContent, null, 2));
 
-        // Generiere die ZIP-Datei
+        // Generiere die ZIP-Datei und lade sie sofort herunter
         const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
 
         // Automatischer Download
         const a = document.createElement('a');
-        a.href = URL.createObjectURL(content);
+        a.href = url;
         a.download = 'combined-resourcepack.zip';
+        a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
 
         // URL freigeben
-        URL.revokeObjectURL(a.href);
+        URL.revokeObjectURL(url);
     } catch (error) {
-        console.error('Fehler beim Erstellen der ZIP-Datei:', error);
+        alert(`Fehler beim Erstellen der ZIP-Datei: ${error.message}`);
     }
 });

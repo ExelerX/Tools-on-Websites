@@ -3,7 +3,7 @@
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>
 
-#### [Resource Pack Combiner V.1.3](https://ccallesmacher.github.io/Tools-on-Websites/Combiner/Combiner.html)
+#### [Resource Pack Combiner V.1.3](https://ccallesmacher.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
 
 `Bugs: I don't know if it works fine :/ didn't test it that much`
 

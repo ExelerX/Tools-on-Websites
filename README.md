@@ -3,9 +3,9 @@
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>
 
-#### [Resource Pack Combiner V.1.0](https://ccallesmacher.github.io/Tools-on-Websites/Combiner/Combiner.html)
+#### [Resource Pack Combiner V.1.3](https://ccallesmacher.github.io/Tools-on-Websites/Combiner/Combiner.html)
 
-`Bugs: it doesn't load the selected Minecraft Version (It's always the same)`
+`Bugs: I don't know if it works fine :/ didn't test it that much`
 
 ---
 

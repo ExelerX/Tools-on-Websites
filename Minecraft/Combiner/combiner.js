@@ -40,12 +40,13 @@ const versionPackFormatMap = {
 // Dropdown mit Versionen füllen
 function populateVersionSelect() {
     console.log("Populating version select dropdown...");
-    Object.keys(versionPackFormatMap).forEach(version => {
+    Object.entries(versionPackFormatMap).forEach(([version, packFormat]) => {
         const option = document.createElement('option');
         option.value = version;
-        option.textContent = version;
+        option.textContent = `${version} (Pack Format: ${packFormat})`;
         versionSelect.appendChild(option);
     });
+    console.log("Version dropdown populated.");
 }
 populateVersionSelect();
 
@@ -225,9 +226,22 @@ function updatePreview() {
 });
 
 combineButton.addEventListener('click', async () => {
-    console.log("Combine button clicked");
+    console.log("Combine button clicked.");
+    if (filesArray.length < 2) {
+        alert('Bitte lade mindestens zwei Resourcepacks hoch.');
+        return;
+    }
+
+    if (incompatiblePacks.length > 0) {
+        const warningMessage = incompatiblePacks.map(pack => `${pack.name}: ${pack.reason}`).join('\n');
+        if (!confirm(`Some packs are incompatible:\n${warningMessage}\nDo you want to continue?`)) {
+            return;
+        }
+    }
+
     const selectedVersion = versionSelect.value;
-    const packFormat = versionPackFormatMap[selectedVersion] || 22;
+    console.log(`Selected version: ${selectedVersion}`);
+    const packFormat = versionPackFormatMap[selectedVersion] || 22; // Fallback auf 22
 
     console.log(`Using pack_format: ${packFormat}`);
     const zip = new JSZip();

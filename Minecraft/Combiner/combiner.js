@@ -31,12 +31,14 @@ const versionPackFormatMap = {
 
 // Dropdown mit Versionen füllen
 function populateVersionSelect() {
-    Object.keys(versionPackFormatMap).forEach(version => {
+    console.log("Populating version select dropdown...");
+    Object.entries(versionPackFormatMap).forEach(([version, packFormat]) => {
         const option = document.createElement('option');
         option.value = version;
-        option.textContent = version;
+        option.textContent = `${version} (Pack Format: ${packFormat})`;
         versionSelect.appendChild(option);
     });
+    console.log("Version dropdown populated.");
 }
 populateVersionSelect();
 

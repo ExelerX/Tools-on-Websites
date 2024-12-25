@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Join Link Generator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: #2b2b2b;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4caf50;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2b2b2b;
+            border-radius: 4px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roblox Join Link Generator</h1>
+        <p>Gib den Roblox-Spiel-Link ein, um einen Join-Link zu generieren.</p>
+        <input type="text" id="robloxLink" placeholder="Roblox-Link hier eingeben">
+        <button onclick="generateJoinLink()">Link generieren</button>
+        <div id="output" class="output" style="display:none;"></div>
+    </div>
+
+    <script>
+        function generateJoinLink() {
+            const inputLink = document.getElementById('robloxLink').value.trim();
+            const outputDiv = document.getElementById('output');
+
+            // Roblox Link Validation (basic example)
+            if (!inputLink || !inputLink.includes("roblox.com/games/")) {
+                outputDiv.style.display = "block";
+                outputDiv.innerHTML = "<span style='color: red;'>Ungültiger Roblox-Link! Bitte überprüfe deine Eingabe.</span>";
+                return;
+            }
+
+            // Extract place ID from the link
+            const linkParts = inputLink.split("/");
+            const placeIdIndex = linkParts.indexOf("games") + 1;
+            const placeId = linkParts[placeIdIndex];
+
+            if (placeId) {
+                const joinLink = `roblox://placeId=${placeId}`;
+                outputDiv.style.display = "block";
+                outputDiv.innerHTML = `<strong>Generierter Join-Link:</strong> <a href="${joinLink}" style="color: #4caf50;">${joinLink}</a>`;
+            } else {
+                outputDiv.style.display = "block";
+                outputDiv.innerHTML = "<span style='color: red;'>Fehler beim Generieren des Links.</span>";
+            }
+        }
+    </script>
+</body>
+</html>

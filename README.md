@@ -11,10 +11,11 @@
 
 ### <font color="green">Roblox</font>
 
-#### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Instand%20Join%20Game/index.html)
+#### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
+
+#### [Join a Random Game](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Randome%20Game/index.html) 
 
 ---
-
 ### <font color="green">Letter to Number:</font>
 
 

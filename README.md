@@ -55,7 +55,7 @@
 
 #### [Website Spam](https://ccallesmacher.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
 
-`It's opening really fast windows in the Browser!!! can be auto disabled by your browser!!!`
+`It opens the websites really fast!!! The browser can automatically disable it so nothing opens. That's why nothing happens on mobile!!!`
 
 `Bugs: None or Unknown`
 

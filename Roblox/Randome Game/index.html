@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Roblox Game</title>
+</head>
+<body>
+    <h1>Willkommen zu einem zufälligen Roblox-Spiel!</h1>
+    <button onclick="openRandomGame()">Spiele ein zufälliges Roblox-Spiel</button>
+
+    <script>
+        function openRandomGame() {
+            // Zufällig eine Roblox-Spiel-ID generieren (zwischen 0 und 10 Milliarden)
+            const randomGameId = Math.floor(Math.random() * 10000000000); // Zufällige Zahl als Spiel-ID
+
+            // roblox:// Link zum zufälligen Spiel
+            const robloxLink = `roblox://placeId=${randomGameId}`;
+
+            // Versuchen, das zufällige Spiel in einem neuen Tab zu öffnen
+            const newTab = window.open(robloxLink, '_blank');
+
+            // Wenn das roblox:// Link nicht funktioniert, gibt es eine Warnung
+            if (!newTab) {
+                alert("Es konnte kein Spiel gestartet werden. Stelle sicher, dass Roblox auf deinem Gerät installiert ist und das Spiel öffentlich zugänglich ist.");
+            }
+        }
+    </script>
+</body>
+</html>

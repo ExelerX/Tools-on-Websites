@@ -5,7 +5,7 @@
 
 #### [Resource Pack Combiner V.1.3](https://ccallesmacher.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
 
-`Bugs: Website is broken because i Uploaded the wrong Version will be Updated until December 30, 2024`
+`Bugs: Website is broken because i Uploaded the wrong Version will be Updated until December 31, 2024`
 
 ---
 

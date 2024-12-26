@@ -55,9 +55,9 @@
 
 #### [Website Spam](https://ccallesmacher.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
 
-`Bugs: None or Unknown`
-
 `It's opening really fast windows in the Browser!!! can be auto disabled by your browser!!!`
+
+`Bugs: None or Unknown`
 
 
 

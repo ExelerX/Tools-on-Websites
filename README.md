@@ -1,4 +1,4 @@
-# <font color="gold">Links for the Websites and for the Tools:</font>
+# <font color="gold">Tools on Websites</font>
 
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>

@@ -39,21 +39,18 @@ const versionPackFormatMap = {
 
 // Dropdown mit Versionen füllen
 function populateVersionSelect() {
-    console.log("Populating version select dropdown...");
     Object.entries(versionPackFormatMap).forEach(([version, packFormat]) => {
         const option = document.createElement('option');
         option.value = version;
         option.textContent = `${version} (Pack Format: ${packFormat})`;
         versionSelect.appendChild(option);
     });
-    console.log("Version dropdown populated.");
 }
 populateVersionSelect();
 
 // Dark Mode Zustand speichern
 const isDarkModeEnabled = () => localStorage.getItem('darkMode') === 'enabled';
 const setDarkMode = (enabled) => {
-    console.log(`Setting dark mode: ${enabled}`);
     if (enabled) {
         document.body.classList.add('dark-mode');
         localStorage.setItem('darkMode', 'enabled');
@@ -65,25 +62,20 @@ const setDarkMode = (enabled) => {
 
 // Dark Mode beim Laden anwenden
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Document loaded. Checking dark mode status...");
     if (isDarkModeEnabled()) {
         darkModeToggle.checked = true;
         setDarkMode(true);
     }
-    console.log("Dark mode status applied.");
 });
 
 // Dark Mode Toggle
 darkModeToggle.addEventListener('change', () => {
-    console.log("Dark mode toggle changed.");
     setDarkMode(darkModeToggle.checked);
 });
 
 // Dateien hinzufügen und anzeigen
 fileInput.addEventListener('change', async () => {
-    console.log("Files selected.");
     filesArray = Array.from(fileInput.files);
-    console.log("Files array updated:", filesArray);
     previews = {};
     incompatiblePacks = [];
     await loadPreviewsAndCheckCompatibility();
@@ -92,7 +84,6 @@ fileInput.addEventListener('change', async () => {
 
 // Kompatibilitätsprüfung beim Versionswechsel
 versionSelect.addEventListener('change', async () => {
-    console.log("Version changed. Rechecking compatibility...");
     incompatiblePacks = [];
     await loadPreviewsAndCheckCompatibility();
     renderFileList();
@@ -100,13 +91,11 @@ versionSelect.addEventListener('change', async () => {
 
 // Vorschauen laden und Kompatibilität prüfen
 async function loadPreviewsAndCheckCompatibility() {
-    console.log("Loading previews and checking compatibility...");
     const selectedVersion = versionSelect.value;
     const selectedPackFormat = versionPackFormatMap[selectedVersion];
 
     for (const file of filesArray) {
         try {
-            console.log(`Loading preview for file: ${file.name}`);
             const zip = await JSZip.loadAsync(file);
             const packMcmeta = zip.file('pack.mcmeta');
             const packPng = zip.file('pack.png');
@@ -143,11 +132,9 @@ async function loadPreviewsAndCheckCompatibility() {
             console.error(`Error loading preview for ${file.name}:`, error);
         }
     }
-    console.log("Compatibility check complete.", incompatiblePacks);
 }
 
 function renderFileList() {
-    console.log("Rendering file list...");
     fileList.innerHTML = '';
     filesArray.forEach((file, index) => {
         const li = document.createElement('li');
@@ -178,11 +165,9 @@ function renderFileList() {
 
         fileList.appendChild(li);
     });
-    console.log("File list rendered.");
 }
 
 function handleDragStart(e, index) {
-    console.log(`Drag started for file at index ${index}.`);
     draggedIndex = index;
     e.target.classList.add('dragging');
 }
@@ -192,17 +177,14 @@ function handleDragOver(e) {
 }
 
 function handleDrop(e, droppedIndex) {
-    console.log(`File dropped at index ${droppedIndex}.`);
     e.preventDefault();
     const draggedFile = filesArray[draggedIndex];
     filesArray.splice(draggedIndex, 1);
     filesArray.splice(droppedIndex, 0, draggedFile);
     renderFileList();
-    console.log("File order updated.");
 }
 
 function handleDragEnd(e) {
-    console.log("Drag ended.");
     e.target.classList.remove('dragging');
 }
 
@@ -226,7 +208,6 @@ function updatePreview() {
 });
 
 combineButton.addEventListener('click', async () => {
-    console.log("Combine button clicked.");
     if (filesArray.length < 2) {
         alert('Bitte lade mindestens zwei Resourcepacks hoch.');
         return;
@@ -240,10 +221,8 @@ combineButton.addEventListener('click', async () => {
     }
 
     const selectedVersion = versionSelect.value;
-    console.log(`Selected version: ${selectedVersion}`);
     const packFormat = versionPackFormatMap[selectedVersion] || 22; // Fallback auf 22
 
-    console.log(`Using pack_format: ${packFormat}`);
     const zip = new JSZip();
 
     const customName = customNameInput.value || 'combined-resourcepack';
@@ -252,7 +231,6 @@ combineButton.addEventListener('click', async () => {
 
     if (customIcon) {
         try {
-            console.log("Adding custom icon...");
             const iconBlob = await customIcon.arrayBuffer();
             zip.file('pack.png', iconBlob);
         } catch (error) {
@@ -262,7 +240,6 @@ combineButton.addEventListener('click', async () => {
 
     for (const file of filesArray) {
         try {
-            console.log(`Adding file to ZIP: ${file.name}`);
             const loadedZip = await JSZip.loadAsync(file);
             loadedZip.forEach((path, fileData) => {
                 if (!zip.file(path)) {
@@ -275,7 +252,6 @@ combineButton.addEventListener('click', async () => {
     }
 
     try {
-        console.log("Creating pack.mcmeta...");
         const mcmetaContent = {
             pack: {
                 pack_format: packFormat,
@@ -286,11 +262,9 @@ combineButton.addEventListener('click', async () => {
 
         zip.file('pack.mcmeta', JSON.stringify(mcmetaContent, null, 2));
 
-        console.log("Generating ZIP file...");
         const content = await zip.generateAsync({ type: 'blob' });
         const url = URL.createObjectURL(content);
 
-        console.log("Initiating download...");
         const a = document.createElement('a');
         a.href = url;
         a.download = `${customName}.zip`;
@@ -299,7 +273,6 @@ combineButton.addEventListener('click', async () => {
         a.click();
         document.body.removeChild(a);
 
-        console.log("Download completed.");
         URL.revokeObjectURL(url);
     } catch (error) {
         console.error('Error generating ZIP file:', error);

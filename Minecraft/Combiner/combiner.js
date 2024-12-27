@@ -10,12 +10,13 @@ const customIconInput = document.getElementById('customIcon');
 const previewIcon = document.getElementById('previewIcon');
 const previewName = document.getElementById('previewName');
 const previewDescription = document.getElementById('previewDescription');
+const loader = document.getElementById('loader');
+const tooltip = document.getElementById('tooltip');
 
 let filesArray = [];
 let previews = {};
 let incompatiblePacks = [];
 
-// Versions-Mapping (Version → pack_format)
 const versionPackFormatMap = {
     "1.6.1 – 1.8.9": 1,
     "1.9 – 1.10.2": 2,
@@ -37,7 +38,6 @@ const versionPackFormatMap = {
     "1.21.4": 46
 };
 
-// Dropdown mit Versionen füllen
 function populateVersionSelect() {
     Object.entries(versionPackFormatMap).forEach(([version, packFormat]) => {
         const option = document.createElement('option');
@@ -48,7 +48,6 @@ function populateVersionSelect() {
 }
 populateVersionSelect();
 
-// Dark Mode Zustand speichern
 const isDarkModeEnabled = () => localStorage.getItem('darkMode') === 'enabled';
 const setDarkMode = (enabled) => {
     if (enabled) {
@@ -60,7 +59,6 @@ const setDarkMode = (enabled) => {
     }
 };
 
-// Dark Mode beim Laden anwenden
 document.addEventListener('DOMContentLoaded', () => {
     if (isDarkModeEnabled()) {
         darkModeToggle.checked = true;
@@ -68,28 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Dark Mode Toggle
 darkModeToggle.addEventListener('change', () => {
     setDarkMode(darkModeToggle.checked);
 });
 
-// Dateien hinzufügen und anzeigen
 fileInput.addEventListener('change', async () => {
     filesArray = Array.from(fileInput.files);
     previews = {};
     incompatiblePacks = [];
+    loader.style.display = 'block';
     await loadPreviewsAndCheckCompatibility();
     renderFileList();
+    loader.style.display = 'none';
 });
 
-// Kompatibilitätsprüfung beim Versionswechsel
 versionSelect.addEventListener('change', async () => {
     incompatiblePacks = [];
+    loader.style.display = 'block';
     await loadPreviewsAndCheckCompatibility();
     renderFileList();
+    loader.style.display = 'none';
 });
 
-// Vorschauen laden und Kompatibilität prüfen
 async function loadPreviewsAndCheckCompatibility() {
     const selectedVersion = versionSelect.value;
     const selectedPackFormat = versionPackFormatMap[selectedVersion];
@@ -152,7 +150,7 @@ function renderFileList() {
             <div class="file-item-content">
                 ${img}
                 <div class="file-info">
-                    <span class="file-name">${file.name}</span>
+                    <span class="file-name" title="${file.name}">${file.name}</span>
                     ${warning}
                 </div>
             </div>
@@ -221,13 +219,15 @@ combineButton.addEventListener('click', async () => {
     }
 
     const selectedVersion = versionSelect.value;
-    const packFormat = versionPackFormatMap[selectedVersion] || 22; // Fallback auf 22
+    const packFormat = versionPackFormatMap[selectedVersion] || 22;
 
     const zip = new JSZip();
 
     const customName = customNameInput.value || 'combined-resourcepack';
     const customDescription = customDescriptionInput.value || 'Kombiniertes Resourcepack';
     const customIcon = customIconInput.files[0];
+
+    loader.style.display = 'block';
 
     if (customIcon) {
         try {
@@ -274,7 +274,9 @@ combineButton.addEventListener('click', async () => {
         document.body.removeChild(a);
 
         URL.revokeObjectURL(url);
+        loader.style.display = 'none';
     } catch (error) {
         console.error('Error generating ZIP file:', error);
+        loader.style.display = 'none';
     }
 });

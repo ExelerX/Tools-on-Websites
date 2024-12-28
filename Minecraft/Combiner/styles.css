@@ -50,6 +50,10 @@ body.dark-mode .container {
     transition: background-color 0.3s;
 }
 
+.file-item img[alt="No Preview"] {
+    opacity: 0.5;
+}
+
 body.dark-mode .file-item {
     background-color: #3c3c3c;
     border-color: var(--border-color-dark);
@@ -80,26 +84,29 @@ body.dark-mode .combine-button {
     background-color: var(--accent-dark);
 }
 
-.loader {
-    text-align: center;
-    font-size: 1.2em;
-    margin-top: 15px;
+.version-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid var(--border-color-light);
+    border-radius: 5px;
+    background-color: var(--background-light);
+    color: var(--text-light);
 }
 
-.tooltip-container {
-    position: relative;
+body.dark-mode .version-select {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border-color: var(--border-color-dark);
 }
 
-.tooltip {
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    font-size: 0.9em;
-    color: #ff6f61;
-    display: none;
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-.file-input:hover + .tooltip,
-.file-input:focus + .tooltip {
-    display: inline;
+.dark-mode-toggle input {
+    margin-left: 10px;
 }

@@ -9,7 +9,7 @@
 
 ---
 
-### <font color="darkblue">Discord</font>
+### <font color="green">Discord</font>
 
 #### [Discord Timestamp Picker](https://ccallesmacher.github.io/Tools-on-Websites/Discord/index.html)
 

@@ -16,7 +16,7 @@
 `Bugs: None or Unknown`
 
 ---
-### Roblox
+### <font color="white">Roblox</font>
 
 #### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
 

@@ -9,10 +9,11 @@
 
 ---
 
-### <font color="dark_blue">Discord</font>
+### <font color="darkblue">Discord</font>
 
 #### [Discord Timestamp Picker](https://ccallesmacher.github.io/Tools-on-Websites/Discord/index.html)
 
+`Bugs: None or Unknown`
 
 ---
 ### <font color="green">Roblox</font>

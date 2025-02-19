@@ -9,14 +9,14 @@
 
 ---
 
-### <font color="green">Discord</font>
+### <font color="darkblue">Discord</font>
 
 #### [Discord Timestamp Picker](https://ccallesmacher.github.io/Tools-on-Websites/Discord/index.html)
 
 `Bugs: None or Unknown`
 
 ---
-### <font color="green">Roblox</font>
+### Roblox
 
 #### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
 
@@ -56,9 +56,9 @@
 
 ---
 
-### <font color="green">Prank Links:</font>
+### <font color="orange">Prank Links:</font>
 
-#### <font color="orange">NOT RECOMMENDED</font>
+#### <font color="red">NOT RECOMMENDED</font>
 
 #### [Website Spam](https://ccallesmacher.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
 

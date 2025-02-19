@@ -9,6 +9,12 @@
 
 ---
 
+### <font color="dark_blue">Discord</font>
+
+#### [Discord Timestamp Picker](https://ccallesmacher.github.io/Tools-on-Websites/Discord/index.html)
+
+
+---
 ### <font color="green">Roblox</font>
 
 #### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)

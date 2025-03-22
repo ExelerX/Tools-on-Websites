@@ -38,22 +38,6 @@
 
 `Bugs: None or Unknown`
 
-
-# <font color="red">!!!WARNING!!!</font>
-
-
-`All Creepy versions from V.5.2 to newer can potentially trigger epilepsy`
-
-#### [Creepy Version V.5.2](https://ccallesmacher.github.io/Tools-on-Websites/LettertoNumber/save%20V.5.2/anti-virus.html)
-
-`Bugs: None or Unknown`
-   
-#### [Creepy Version V.5.3](https://ccallesmacher.github.io/Tools-on-Websites/LettertoNumber/save%20V.5.3/anti-virus.html)
-
-`Bugs: None or Unknown`
-
-#### ↳ [Broken but Newer (V.5.4)](https://ccallesmacher.github.io/Tools-on-Websites/LettertoNumber/save%20V.5.3/notgood/anti-virus.html)
-
 ---
 
 ### <font color="orange">Prank Links:</font>

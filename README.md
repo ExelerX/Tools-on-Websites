@@ -3,7 +3,7 @@
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>
 
-#### [Resource Pack Combiner V.1.3](https://ccallesmacher.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
+#### [Resource Pack Combiner V.1.3](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
 
 `Bugs: None or Unknown`
 
@@ -11,18 +11,18 @@
 
 ### <font color="darkblue">Discord</font>
 
-#### [Discord Timestamp Picker](https://ccallesmacher.github.io/Tools-on-Websites/Discord/index.html)
+#### [Discord Timestamp Picker](https://exelerx.github.io/Tools-on-Websites/Discord/index.html)
 
 `Bugs: None or Unknown`
 
 ---
 ### <font color="white">Roblox</font>
 
-#### [Instant game join link Generator](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
+#### [Instant game join link Generator](https://exelerx.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
 
 `Bugs: None or Unknown`
 
-#### [Join a Random Game](https://ccallesmacher.github.io/Tools-on-Websites/Roblox/Randome%20Game/index.html) 
+#### [Join a Random Game](https://exelerx.github.io/Tools-on-Websites/Roblox/Randome%20Game/index.html) 
 
 `Bugs: None or Unknown`
 
@@ -30,11 +30,11 @@
 ### <font color="green">Letter to Number:</font>
 
 
-#### [Origin](https://ccallesmacher.github.io/Tools-on-Websites/LettertoNumber/LettertoNumber.html)
+#### [Origin](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/LettertoNumber.html)
 
 `Bugs: None or Unknown`
 
-#### [Jumpscrare Version V1.2](https://ccallesmacher.github.io/Tools-on-Websites/LettertoNumber/Lettertonumber.html)
+#### [Jumpscrare Version V1.2](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/Lettertonumber.html)
 
 `Bugs: None or Unknown`
 
@@ -44,7 +44,7 @@
 
 #### <font color="red">NOT RECOMMENDED</font>
 
-#### [Website Spam](https://ccallesmacher.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
+#### [Website Spam](https://exelerx.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
 
 `It opens the websites really fast!!! The browser may automatically disable it so nothing opens.`
 
@@ -54,4 +54,4 @@
 
 ---
 
-#### <font color="gold">Made by ___CCAllesmacher___</font>
+#### <font color="gold">Made by ___ExelerX___</font>

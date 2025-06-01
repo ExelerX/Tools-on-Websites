@@ -9,7 +9,7 @@
 
 #### [Resource Pack Combiner V.1.5 (Advanced)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.5/index.html)
 
-`Bugs: (Beta) Some small Bugs`
+`Bugs: (Beta) Some really small bugs`
 
 ---
 

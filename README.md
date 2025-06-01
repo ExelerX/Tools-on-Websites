@@ -3,9 +3,13 @@
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>
 
-#### [Resource Pack Combiner V.1.3](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
+#### [Resource Pack Combiner V.1.4](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.4/index.html)
 
 `Bugs: None or Unknown`
+
+#### [Resource Pack Combiner V.1.4](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/index.html)
+
+`Bugs: (Beta) Some small Bugs`
 
 ---
 

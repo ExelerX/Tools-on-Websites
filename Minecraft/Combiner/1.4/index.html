@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resourcepack Combiner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <header>
+            <h1>Resourcepack Combiner</h1>
+            <label class="dark-mode-toggle">
+                Dark Mode
+                <input type="checkbox" id="darkModeToggle" checked>
+            </label>
+        </header>
+        <main>
+            <label for="versionSelect" class="version-label">Minecraft Version:</label>
+            <select id="versionSelect" class="version-select">
+                <!-- Versionen werden hier dynamisch hinzugefügt -->
+            </select>
+
+            <input type="file" id="fileInput" multiple accept=".zip" class="file-input">
+            <p id="fileHint" class="file-hint">Mindestens zwei Packs nötig</p>
+            <ul id="fileList" class="file-list"></ul>
+            <button id="combineButton" class="combine-button" disabled>Combine Resourcepacks</button>
+        </main>
+        <footer>
+            <p>© 2024 Resourcepack Combiner. Alle Rechte vorbehalten.</p>
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="combiner.js"></script>
+</body>
+</html>

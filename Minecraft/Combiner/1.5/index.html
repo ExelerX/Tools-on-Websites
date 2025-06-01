@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resourcepack Combiner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <header>
+            <h1>Resourcepack Combiner</h1>
+            <label class="dark-mode-toggle">
+                Dark Mode
+                <input type="checkbox" id="darkModeToggle" checked>
+            </label>
+        </header>
+        <main>
+            <section class="section">
+                <h2 class="section-title">1. Version &amp; Metadaten</h2>
+                <label for="versionSelect" class="version-label">Minecraft-Version:</label>
+                <select id="versionSelect" class="version-select"></select>
+
+                <label for="authorInput" class="meta-label">Autor:</label>
+                <input type="text" id="authorInput" class="meta-input" placeholder="z. B. DeinName">
+
+                <label for="descriptionInput" class="meta-label">Beschreibung:</label>
+                <textarea id="descriptionInput" class="meta-textarea" rows="3" placeholder="Kurzbeschreibung deines Packs"></textarea>
+
+                <label for="logoInput" class="meta-label">Pack-Logo (optional):</label>
+                <input type="file" id="logoInput" accept="image/png" class="file-input">
+
+                <div id="logoPreviewContainer" class="logo-preview-container hidden">
+                    <span>Vorschau:</span>
+                    <img id="logoPreview" class="logo-preview" src="" alt="Logo-Vorschau">
+                </div>
+
+                <div class="preset-container">
+                    <input type="text" id="presetNameInput" class="preset-input" placeholder="Preset-Name">
+                    <button id="savePresetButton" class="preset-button">Preset speichern</button>
+                    <select id="loadPresetSelect" class="preset-select">
+                        <option value="">Preset laden…</option>
+                    </select>
+                    <button id="deletePresetButton" class="preset-button" disabled>Preset löschen</button>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">2. Resourcepacks auswählen</h2>
+                <div class="button-row">
+                    <button id="addFilesButton" class="action-button">Dateien hinzufügen</button>
+                    <button id="removeAllButton" class="action-button">Alles entfernen</button>
+                    <button id="undoButton" class="action-button" disabled>Undo</button>
+                    <button id="redoButton" class="action-button" disabled>Redo</button>
+                </div>
+                <input type="file" id="fileInput" multiple accept=".zip" class="file-input hidden">
+                <p id="fileHint" class="file-hint">Mindestens zwei Packs nötig</p>
+                <ul id="fileList" class="file-list"></ul>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">3. Konflikte (Doppelte Dateien)</h2>
+                <div id="conflictContainer" class="conflict-container">
+                    <p id="noConflicts" class="conflict-none">Keine Konflikte gefunden.</p>
+                    <ul id="conflictList" class="conflict-list"></ul>
+                </div>
+                <div class="legend">
+                    <span class="legend-item"><span class="status-indicator status-green"></span> Grün: Keine Konflikte  </span>
+                    <span class="legend-item"><span class="status-indicator status-yellow"></span> Gelb: Wenige Konflikte (1–5)  </span>
+                    <span class="legend-item"><span class="status-indicator status-red"></span> Rot: Viele Konflikte (> 5)</span>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">4. Abhängigkeiten</h2>
+                <div id="dependencyContainer" class="dependency-container">
+                    <p>Wähle ein Pack, um Abhängigkeiten zu sehen.</p>
+                </div>
+            </section>
+
+            <div class="button-row bottom-row">
+                <button id="saveSessionButton" class="action-button">Session speichern</button>
+                <button id="loadSessionButton" class="action-button">Session laden</button>
+                <input type="file" id="loadSessionInput" accept=".json" class="file-input hidden">
+                <button id="combineButton" class="combine-button" disabled>Combine Resourcepacks</button>
+            </div>
+        </main>
+        <footer>
+            <p>© 2025 Resourcepack Combiner. Alle Rechte vorbehalten.</p>
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="combiner.js"></script>
+</body>
+</html>

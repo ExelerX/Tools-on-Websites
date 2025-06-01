@@ -7,7 +7,7 @@
 
 `Bugs: None or Unknown`
 
-#### [Resource Pack Combiner V.1.5](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.5/index.html)
+#### [Resource Pack Combiner V.1.5 (Advanced)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.5/index.html)
 
 `Bugs: (Beta) Some small Bugs`
 

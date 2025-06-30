@@ -3,11 +3,11 @@
 
 ### <font color="green">Minecraft Resource Pack Combiner</font>
 
-#### [Resource Pack Combiner V 1.4 (Kompact)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.4/index.html)
+#### [Resource Pack Combiner  1.4 (Kompact)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.4/index.html)
 
 `Bugs: None or Unknown`
 
-#### [Resource Pack Combiner V 1.5 (Advanced)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.5/index.html)
+#### [Resource Pack Combiner  1.5 (Advanced)](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/1.5/index.html)
 
 `Bugs: (Beta) Some really small bugs`
 
@@ -15,7 +15,7 @@
 
 ### <font color="darkblue">Discord</font>
 
-#### [Discord Timestamp Picker V 1.1](https://exelerx.github.io/Tools-on-Websites/Discord/index.html)
+#### [Discord Timestamp Picker  1.1](https://exelerx.github.io/Tools-on-Websites/Discord/index.html)
 
 `Bugs: None or Unknown`
 
@@ -38,7 +38,7 @@
 
 `Bugs: None or Unknown`
 
-#### [Jumpscrare Version V 1.2](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/Lettertonumber.html)
+#### [Jumpscrare Version  1.2](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/Lettertonumber.html)
 
 `Bugs: None or Unknown`
 

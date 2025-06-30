@@ -15,7 +15,7 @@
 
 ### <font color="darkblue">Discord</font>
 
-#### [Discord Timestamp Picker](https://exelerx.github.io/Tools-on-Websites/Discord/index.html)
+#### [Discord Timestamp Picker 1.1](https://exelerx.github.io/Tools-on-Websites/Discord/index.html)
 
 `Bugs: None or Unknown`
 

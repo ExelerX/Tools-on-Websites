@@ -1,0 +1,185 @@
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import "./index.css";
+
+const translations = {
+  en: {
+    minecraft: "Minecraft Combiner",
+    discord: "Discord Timestamp",
+    roblox: "Roblox Tools",
+    letter: "Letter-Number Converter",
+    prank: "Prank Links",
+    combine: "Combine",
+    selectFiles: "Select two resource pack ZIPs",
+    version: "Version",
+    mode: "Mode",
+    compact: "Compact",
+    advanced: "Advanced",
+    timestampLabel: "Enter Date/Time",
+    generate: "Generate",
+    copy: "Copy",
+    gameId: "Game ID",
+    instantJoin: "Instant Join Link",
+    randomJoin: "Random Game Link",
+    inputText: "Input Text",
+    convert: "Convert",
+    warning: "⚠️ Warning: These links are for fun and can be dangerous! Use at your own risk!",
+    select: "– Select –"
+  },
+  de: {
+    minecraft: "Minecraft Kombinierer",
+    discord: "Discord Zeitstempel",
+    roblox: "Roblox Werkzeuge",
+    letter: "Buchstaben-Zahlen Konverter",
+    prank: "Prank-Links",
+    combine: "Kombinieren",
+    selectFiles: "Zwei Resource-Pack-ZIPs auswählen",
+    version: "Version",
+    mode: "Modus",
+    compact: "Kompakt",
+    advanced: "Erweitert",
+    timestampLabel: "Datum/Uhrzeit eingeben",
+    generate: "Erstellen",
+    copy: "Kopieren",
+    gameId: "Spiel-ID",
+    instantJoin: "Sofort-Join-Link",
+    randomJoin: "Zufalls-Spiel-Link",
+    inputText: "Text eingeben",
+    convert: "Konvertieren",
+    warning: "⚠️ Achtung: Diese Links sind nur zum Spaß und können gefährlich sein! Benutzung auf eigene Verantwortung!",
+    select: "– Auswählen –"
+  }
+};
+
+function App() {
+  const languages = ["en","de"];
+  const tools = ["minecraft","discord","roblox","letter","prank"];
+  const [lang,setLang] = useState("en");
+  const [activeTool,setActiveTool] = useState(tools[0]);
+  const t = translations[lang];
+  return (
+    <div className="dark bg-gray-900 text-white min-h-screen font-sans">
+      <header className="p-4 flex justify-between items-center">
+        <h1 className="text-2xl">Tools on Websites</h1>
+        <div className="flex space-x-4">
+          <select value={lang} onChange={e=>setLang(e.target.value)} className="p-2 rounded bg-gray-800 text-white">
+            {languages.map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}
+          </select>
+          <nav className="space-x-2">
+            {tools.map(key=>(
+              <button key={key} onClick={()=>setActiveTool(key)} className={`px-3 py-1 rounded ${activeTool===key?"bg-blue-600":"bg-gray-700"}`}>
+                {t[key]}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+      <main className="p-4">
+        {activeTool==="minecraft"&&<MinecraftCombiner t={t}/>}        
+        {activeTool==="discord"&&<DiscordTimestampPicker t={t}/>}        
+        {activeTool==="roblox"&&<RobloxTools t={t}/>}        
+        {activeTool==="letter"&&<LetterNumberConverter t={t}/>}        
+        {activeTool==="prank"&&<PrankLinks t={t}/>}      
+      </main>
+    </div>
+  );
+}
+
+function MinecraftCombiner({t}){
+  const [files,setFiles]=useState([]);
+  const [version,setVersion]=useState("1.4");
+  const [mode,setMode]=useState("compact");
+  const onChange=e=>setFiles(Array.from(e.target.files));
+  const combine=async()=>{
+    if(files.length<2)return;
+    const zip=new JSZip();
+    for(let f of files)zip.file(f.name,await f.arrayBuffer());
+    zip.file("version.txt", `${version} - ${mode}`);
+    const blob=await zip.generateAsync({type:"blob"});
+    saveAs(blob,"combined-pack.zip");
+  };
+  return (<div>
+    <label className="block mb-2">{t.selectFiles}:</label>
+    <input type="file" accept=".zip" multiple onChange={onChange} className="mb-2"/>
+    <div className="flex space-x-2 mb-2">
+      <select value={version} onChange={e=>setVersion(e.target.value)} className="p-1 rounded bg-gray-800">
+        <option value="1.4">1.4</option><option value="1.5">1.5</option>
+      </select>
+      <select value={mode} onChange={e=>setMode(e.target.value)} className="p-1 rounded bg-gray-800">
+        <option value="compact">{t.compact}</option>
+        <option value="advanced">{t.advanced}</option>
+      </select>
+    </div>
+    <button onClick={combine} className="px-4 py-2 bg-blue-600 rounded">{t.combine}</button>
+  </div>);
+}
+
+function DiscordTimestampPicker({t}){
+  const [dt,setDt]=useState("");
+  const [out,setOut]=useState("");
+  const gen=()=>{
+    const ts=Math.floor(new Date(dt).getTime()/1000);
+    setOut(`<t:${ts}:F>`);
+  };
+  const copy=()=>navigator.clipboard.writeText(out);
+  return (<div>
+    <label>{t.timestampLabel}:</label>
+    <input type="datetime-local" value={dt} onChange={e=>setDt(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
+    <button onClick={gen} className="px-4 py-2 bg-blue-600 rounded mb-2">{t.generate}</button>
+    {out&&<div>
+      <code className="block mb-2">{out}</code>
+      <button onClick={copy} className="px-3 py-1 bg-green-600 rounded">{t.copy}</button>
+    </div>}
+  </div>);
+}
+
+function RobloxTools({t}){
+  const [id,setId]=useState("");
+  const [instant,setInstant]=useState("");
+  const [random,setRandom]=useState("");
+  const genInstant=()=>setInstant(`https://www.roblox.com/games/${id}`);
+  const genRandom=()=>setRandom(`https://www.roblox.com/games/${Math.floor(Math.random()*100000000)}`);
+  return (<div>
+    <label>{t.gameId}:</label>
+    <input type="text" value={id} onChange={e=>setId(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
+    <button onClick={genInstant} className="px-4 py-2 bg-blue-600 rounded mr-2">{t.instantJoin}</button>
+    <button onClick={genRandom} className="px-4 py-2 bg-blue-600 rounded">{t.randomJoin}</button>
+    {instant&&<div><a href={instant} target="_blank" rel="noopener noreferrer">{instant}</a></div>}
+    {random&&<div><a href={random} target="_blank" rel="noopener noreferrer">{random}</a></div>}
+  </div>);
+}
+
+function LetterNumberConverter({t}){
+  const [text,setText]=useState("");
+  const [out,setOut]=useState("");
+  const convert=()=>{
+    const map=char=>char.match(/[A-Za-z]/)?char.toUpperCase().charCodeAt(0)-64:char;
+    setOut(text.split("").map(map).join(" "));
+  };
+  return (<div>
+    <label>{t.inputText}:</label>
+    <input type="text" value={text} onChange={e=>setText(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
+    <button onClick={convert} className="px-4 py-2 bg-blue-600 rounded">{t.convert}</button>
+    {out&&<div className="mt-2"><code>{out}</code></div>}
+  </div>);
+}
+
+function PrankLinks({t}){
+  const pranks=[
+    {name:"Spam Window",url:"javascript:(()=>{for(let i=0;i<10;i++)window.open('', '', 'width=200,height=200');})();"},
+    {name:"Fake Crash",url:"javascript:alert('Crash!');throw new Error();"}
+  ];
+  const [chosen,setChosen]=useState("");
+  return (<div>
+    <div className="mb-2 text-yellow-400">{t.warning}</div>
+    <select value={chosen} onChange={e=>setChosen(e.target.value)} className="p-1 rounded bg-gray-800 mb-2">
+      <option value="">{t.select}</option>
+      {pranks.map(p=><option key={p.url} value={p.url}>{p.name}</option>)}
+    </select>
+    {chosen&&<div><a href={chosen}>{chosen}</a></div>}
+  </div>);
+}
+
+ReactDOM.render(<App/>, document.getElementById("root"));

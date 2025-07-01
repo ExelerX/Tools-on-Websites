@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import "./index.css";
@@ -54,132 +54,310 @@ const translations = {
 };
 
 function App() {
-  const languages = ["en","de"];
-  const tools = ["minecraft","discord","roblox","letter","prank"];
-  const [lang,setLang] = useState("en");
-  const [activeTool,setActiveTool] = useState(tools[0]);
+  const languages = ["en", "de"];
+  const tools = [
+    "minecraft",
+    "discord",
+    "roblox",
+    "letter",
+    "prank"
+  ];
+
+  const [lang, setLang] = useState("en");
+  const [activeTool, setActiveTool] = useState(tools[0]);
   const t = translations[lang];
+
   return (
     <div className="dark bg-gray-900 text-white min-h-screen font-sans">
-      <header className="p-4 flex justify-between items-center">
-        <h1 className="text-2xl">Tools on Websites</h1>
-        <div className="flex space-x-4">
-          <select value={lang} onChange={e=>setLang(e.target.value)} className="p-2 rounded bg-gray-800 text-white">
-            {languages.map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}
+      <header className="flex items-center justify-between p-4">
+        <h1 className="text-2xl font-bold">Tools on Websites</h1>
+
+        <div className="flex items-center space-x-4">
+          <select
+            value={lang}
+            onChange={e => setLang(e.target.value)}
+            className="p-2 rounded bg-gray-800"
+          >
+            {languages.map(code => (
+              <option key={code} value={code}>
+                {code.toUpperCase()}
+              </option>
+            ))}
           </select>
+
           <nav className="space-x-2">
-            {tools.map(key=>(
-              <button key={key} onClick={()=>setActiveTool(key)} className={`px-3 py-1 rounded ${activeTool===key?"bg-blue-600":"bg-gray-700"}`}>
+            {tools.map(key => (
+              <button
+                key={key}
+                onClick={() => setActiveTool(key)}
+                className={`px-3 py-1 rounded ${
+                  activeTool === key ? "bg-blue-600" : "bg-gray-700"
+                }`}
+              >
                 {t[key]}
               </button>
             ))}
           </nav>
         </div>
       </header>
-      <main className="p-4">
-        {activeTool==="minecraft"&&<MinecraftCombiner t={t}/>}        
-        {activeTool==="discord"&&<DiscordTimestampPicker t={t}/>}        
-        {activeTool==="roblox"&&<RobloxTools t={t}/>}        
-        {activeTool==="letter"&&<LetterNumberConverter t={t}/>}        
-        {activeTool==="prank"&&<PrankLinks t={t}/>}      
+
+      <main className="p-6">
+        {activeTool === "minecraft" && <MinecraftCombiner t={t} />}
+        {activeTool === "discord" && <DiscordTimestampPicker t={t} />}
+        {activeTool === "roblox" && <RobloxTools t={t} />}
+        {activeTool === "letter" && <LetterNumberConverter t={t} />}
+        {activeTool === "prank" && <PrankLinks t={t} />}
       </main>
     </div>
   );
 }
 
-function MinecraftCombiner({t}){
-  const [files,setFiles]=useState([]);
-  const [version,setVersion]=useState("1.4");
-  const [mode,setMode]=useState("compact");
-  const onChange=e=>setFiles(Array.from(e.target.files));
-  const combine=async()=>{
-    if(files.length<2)return;
-    const zip=new JSZip();
-    for(let f of files)zip.file(f.name,await f.arrayBuffer());
+function MinecraftCombiner({ t }) {
+  const [files, setFiles] = useState([]);
+  const [version, setVersion] = useState("1.4");
+  const [mode, setMode] = useState("compact");
+
+  const handleFiles = e => setFiles([...e.target.files]);
+
+  const combine = async () => {
+    if (files.length < 2) return;
+
+    const zip = new JSZip();
+    for (const file of files) {
+      const data = await file.arrayBuffer();
+      zip.file(file.name, data);
+    }
     zip.file("version.txt", `${version} - ${mode}`);
-    const blob=await zip.generateAsync({type:"blob"});
-    saveAs(blob,"combined-pack.zip");
+
+    const blob = await zip.generateAsync({ type: "blob" });
+    saveAs(blob, "combined-pack.zip");
   };
-  return (<div>
-    <label className="block mb-2">{t.selectFiles}:</label>
-    <input type="file" accept=".zip" multiple onChange={onChange} className="mb-2"/>
-    <div className="flex space-x-2 mb-2">
-      <select value={version} onChange={e=>setVersion(e.target.value)} className="p-1 rounded bg-gray-800">
-        <option value="1.4">1.4</option><option value="1.5">1.5</option>
-      </select>
-      <select value={mode} onChange={e=>setMode(e.target.value)} className="p-1 rounded bg-gray-800">
-        <option value="compact">{t.compact}</option>
-        <option value="advanced">{t.advanced}</option>
-      </select>
-    </div>
-    <button onClick={combine} className="px-4 py-2 bg-blue-600 rounded">{t.combine}</button>
-  </div>);
+
+  return (
+    <section className="space-y-4">
+      <label className="block font-medium">{t.selectFiles}:</label>
+      <input
+        type="file"
+        accept=".zip"
+        multiple
+        onChange={handleFiles}
+        className="block w-full rounded bg-gray-800 p-2"
+      />
+
+      <div className="flex space-x-4">
+        <select
+          value={version}
+          onChange={e => setVersion(e.target.value)}
+          className="rounded bg-gray-800 p-2"
+        >
+          <option value="1.4">1.4</option>
+          <option value="1.5">1.5</option>
+        </select>
+
+        <select
+          value={mode}
+          onChange={e => setMode(e.target.value)}
+          className="rounded bg-gray-800 p-2"
+        >
+          <option value="compact">{t.compact}</option>
+          <option value="advanced">{t.advanced}</option>
+        </select>
+      </div>
+
+      <button
+        onClick={combine}
+        className="rounded bg-blue-600 px-4 py-2 font-semibold"
+      >
+        {t.combine}
+      </button>
+    </section>
+  );
 }
 
-function DiscordTimestampPicker({t}){
-  const [dt,setDt]=useState("");
-  const [out,setOut]=useState("");
-  const gen=()=>{
-    const ts=Math.floor(new Date(dt).getTime()/1000);
-    setOut(`<t:${ts}:F>`);
+function DiscordTimestampPicker({ t }) {
+  const [datetime, setDatetime] = useState("");
+  const [output, setOutput] = useState("");
+
+  const generate = () => {
+    const ts = Math.floor(new Date(datetime).getTime() / 1000);
+    setOutput(`<t:${ts}:F>`);
   };
-  const copy=()=>navigator.clipboard.writeText(out);
-  return (<div>
-    <label>{t.timestampLabel}:</label>
-    <input type="datetime-local" value={dt} onChange={e=>setDt(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
-    <button onClick={gen} className="px-4 py-2 bg-blue-600 rounded mb-2">{t.generate}</button>
-    {out&&<div>
-      <code className="block mb-2">{out}</code>
-      <button onClick={copy} className="px-3 py-1 bg-green-600 rounded">{t.copy}</button>
-    </div>}
-  </div>);
+
+  return (
+    <section className="space-y-4">
+      <label className="block font-medium">{t.timestampLabel}:</label>
+      <input
+        type="datetime-local"
+        value={datetime}
+        onChange={e => setDatetime(e.target.value)}
+        className="block w-full rounded bg-gray-800 p-2"
+      />
+
+      <button
+        onClick={generate}
+        className="rounded bg-blue-600 px-4 py-2 font-semibold"
+      >
+        {t.generate}
+      </button>
+
+      {output && (
+        <div className="space-y-2">
+          <code className="block bg-gray-800 p-2 rounded">{output}</code>
+          <button
+            onClick={() => navigator.clipboard.writeText(output)}
+            className="rounded bg-green-600 px-3 py-1 font-semibold"
+          >
+            {t.copy}
+          </button>
+        </div>
+      )}
+    </section>
+  );
 }
 
-function RobloxTools({t}){
-  const [id,setId]=useState("");
-  const [instant,setInstant]=useState("");
-  const [random,setRandom]=useState("");
-  const genInstant=()=>setInstant(`https://www.roblox.com/games/${id}`);
-  const genRandom=()=>setRandom(`https://www.roblox.com/games/${Math.floor(Math.random()*100000000)}`);
-  return (<div>
-    <label>{t.gameId}:</label>
-    <input type="text" value={id} onChange={e=>setId(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
-    <button onClick={genInstant} className="px-4 py-2 bg-blue-600 rounded mr-2">{t.instantJoin}</button>
-    <button onClick={genRandom} className="px-4 py-2 bg-blue-600 rounded">{t.randomJoin}</button>
-    {instant&&<div><a href={instant} target="_blank" rel="noopener noreferrer">{instant}</a></div>}
-    {random&&<div><a href={random} target="_blank" rel="noopener noreferrer">{random}</a></div>}
-  </div>);
+function RobloxTools({ t }) {
+  const [id, setId] = useState("");
+  const [instant, setInstant] = useState("");
+  const [randomLink, setRandomLink] = useState("");
+
+  const genInstant = () => setInstant(`https://www.roblox.com/games/${id}`);
+  const genRandom = () => setRandomLink(
+    `https://www.roblox.com/games/${Math.floor(Math.random() * 1e8)}`
+  );
+
+  return (
+    <section className="space-y-4">
+      <label className="block font-medium">{t.gameId}:</label>
+      <input
+        type="text"
+        value={id}
+        onChange={e => setId(e.target.value)}
+        className="block w-full rounded bg-gray-800 p-2"
+      />
+
+      <div className="flex space-x-4">
+        <button
+          onClick={genInstant}
+          className="rounded bg-blue-600 px-4 py-2 font-semibold"
+        >
+          {t.instantJoin}
+        </button>
+
+        <button
+          onClick={genRandom}
+          className="rounded bg-blue-600 px-4 py-2 font-semibold"
+        >
+          {t.randomJoin}
+        </button>
+      </div>
+
+      {instant && (
+        <a
+          href={instant}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block break-words text-blue-400"
+        >
+          {instant}
+        </a>
+      )}
+
+      {randomLink && (
+        <a
+          href={randomLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block break-words text-blue-400"
+        >
+          {randomLink}
+        </a>
+      )}
+    </section>
+  );
 }
 
-function LetterNumberConverter({t}){
-  const [text,setText]=useState("");
-  const [out,setOut]=useState("");
-  const convert=()=>{
-    const map=char=>char.match(/[A-Za-z]/)?char.toUpperCase().charCodeAt(0)-64:char;
-    setOut(text.split("").map(map).join(" "));
+function LetterNumberConverter({ t }) {
+  const [text, setText] = useState("");
+  const [output, setOutput] = useState("");
+
+  const convert = () => {
+    const result = text.split("").map(char =>
+      /[A-Za-z]/.test(char)
+        ? char.toUpperCase().charCodeAt(0) - 64
+        : char
+    );
+
+    setOutput(result.join(" "));
   };
-  return (<div>
-    <label>{t.inputText}:</label>
-    <input type="text" value={text} onChange={e=>setText(e.target.value)} className="block mb-2 p-1 rounded bg-gray-800"/>
-    <button onClick={convert} className="px-4 py-2 bg-blue-600 rounded">{t.convert}</button>
-    {out&&<div className="mt-2"><code>{out}</code></div>}
-  </div>);
+
+  return (
+    <section className="space-y-4">
+      <label className="block font-medium">{t.inputText}:</label>
+      <input
+        type="text"
+        value={text}
+        onChange={e => setText(e.target.value)}
+        className="block w-full rounded bg-gray-800 p-2"
+      />
+
+      <button
+        onClick={convert}
+        className="rounded bg-blue-600 px-4 py-2 font-semibold"
+      >
+        {t.convert}
+      </button>
+
+      {output && (
+        <div className="rounded bg-gray-800 p-2 font-mono">{output}</div>
+      )}
+    </section>
+  );
 }
 
-function PrankLinks({t}){
-  const pranks=[
-    {name:"Spam Window",url:"javascript:(()=>{for(let i=0;i<10;i++)window.open('', '', 'width=200,height=200');})();"},
-    {name:"Fake Crash",url:"javascript:alert('Crash!');throw new Error();"}
-  ];
-  const [chosen,setChosen]=useState("");
-  return (<div>
-    <div className="mb-2 text-yellow-400">{t.warning}</div>
-    <select value={chosen} onChange={e=>setChosen(e.target.value)} className="p-1 rounded bg-gray-800 mb-2">
+function PrankLinks({ t }) {
+const pranks = [
+  {
+    name: "Spam Window",
+    url: "javascript:(()=>{for(let i=0;i<10;i++)window.open('','','width=200,height=200');})();"
+  },
+  {
+    name: "Fake Crash",
+    url: "javascript:alert('Crash!');throw new Error();"
+  }
+];
+
+const [chosen, setChosen] = useState("");
+
+return (
+  <section className="space-y-4">
+    <div className="text-yellow-400 font-medium">{t.warning}</div>
+
+    <select
+      value={chosen}
+      onChange={e => setChosen(e.target.value)}
+      className="block w-full rounded bg-gray-800 p-2"
+    >
       <option value="">{t.select}</option>
-      {pranks.map(p=><option key={p.url} value={p.url}>{p.name}</option>)}
+      {pranks.map(p => (
+        <option key={p.url} value={p.url}>
+          {p.name}
+        </option>
+      ))}
     </select>
-    {chosen&&<div><a href={chosen}>{chosen}</a></div>}
-  </div>);
+
+    {chosen && (
+      <a
+        href={chosen}
+        className="block text-blue-400 break-words"
+      >
+        {chosen}
+      </a>
+    )}
+  </section>
+);
 }
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+// Render app
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<App />);

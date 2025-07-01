@@ -5,12 +5,149 @@ import { saveAs } from "file-saver";
 import "./index.css";
 
 const translations = {
-  en: { /* ...translations unchanged...*/ },
-  de: { /* ...translations unchanged...*/ }
+  en: {
+    pages: "Pages",
+    autoDetect: "Auto-detect Page",
+    addPage: "Add Page",
+    titlePlaceholder: "Page Title",
+    urlPlaceholder: "Page URL",
+    selected: "Selected",
+    open: "open",
+    minecraft: "Minecraft Combiner",
+    discord: "Discord Timestamp",
+    roblox: "Roblox Tools",
+    letter: "Letter-Number Converter",
+    prank: "Prank Links",
+    combine: "Combine",
+    selectFiles: "Select 2 resource pack ZIPs",
+    version: "Version",
+    mode: "Mode",
+    compact: "Compact",
+    advanced: "Advanced",
+    timestampLabel: "Enter date/time",
+    generate: "Generate",
+    copy: "Copy",
+    gameId: "Game ID",
+    instantJoin: "Instant Join",
+    randomJoin: "Random Join",
+    inputText: "Input text",
+    convert: "Convert",
+    warning: "⚠️ Warning: Prank links are for fun and may be dangerous. Use at your own risk!",
+    select: "– Select –"
+  },
+  de: {
+    pages: "Seiten",
+    autoDetect: "Seite automatisch erkennen",
+    addPage: "Seite hinzufügen",
+    titlePlaceholder: "Seitentitel",
+    urlPlaceholder: "Seiten-URL",
+    selected: "Ausgewählt",
+    open: "öffnen",
+    minecraft: "Minecraft Kombinierer",
+    discord: "Discord Zeitstempel",
+    roblox: "Roblox Werkzeuge",
+    letter: "Buchstaben-Zahlen Konverter",
+    prank: "Prank-Links",
+    combine: "Kombinieren",
+    selectFiles: "2 Resource-Pack-ZIPs auswählen",
+    version: "Version",
+    mode: "Modus",
+    compact: "Kompakt",
+    advanced: "Erweitert",
+    timestampLabel: "Datum/Uhrzeit eingeben",
+    generate: "Erstellen",
+    copy: "Kopieren",
+    gameId: "Spiel-ID",
+    instantJoin: "Sofort Join",
+    randomJoin: "Zufalls-Join",
+    inputText: "Text eingeben",
+    convert: "Konvertieren",
+    warning: "⚠️ Achtung: Prank-Links sind zum Spaß und können gefährlich sein. Benutzung auf eigene Gefahr!",
+    select: "– Auswählen –"
+  }
 };
 
+function Sidebar({ pages, onDetect, onAdd, onSelect, selectedIndex, newTitle, setNewTitle, newURL, setNewURL, t }) {
+  return (
+    <aside className="w-64 bg-gray-800 p-6 flex flex-col space-y-6">
+      <h2 className="text-2xl font-semibold">{t.pages}</h2>
+      <button onClick={onDetect} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
+        {t.autoDetect}
+      </button>
+      <div className="space-y-2">
+        <input
+          type="text"
+          placeholder={t.titlePlaceholder}
+          value={newTitle}
+          onChange={e => setNewTitle(e.target.value)}
+          className="w-full p-2 rounded bg-gray-700 text-white"
+        />
+        <input
+          type="url"
+          placeholder={t.urlPlaceholder}
+          value={newURL}
+          onChange={e => setNewURL(e.target.value)}
+          className="w-full p-2 rounded bg-gray-700 text-white"
+        />
+        <button onClick={onAdd} className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">
+          {t.addPage}
+        </button>
+      </div>
+      <nav className="flex-1 overflow-y-auto">
+        {pages.map((p, i) => (
+          <div
+            key={i}
+            onClick={() => onSelect(i)}
+            className={`cursor-pointer p-2 rounded mb-1 ${
+              selectedIndex === i ? "bg-blue-500" : "hover:bg-gray-700"
+            }`}
+          >
+            {p.title}
+          </div>
+        ))}
+      </nav>
+    </aside>
+  );
+}
+
+function Header({ lang, setLang, tools, activeTool, setActiveTool, t }) {
+  return (
+    <header className="flex items-center justify-between p-6 bg-gray-900">
+      <h1 className="text-3xl font-bold">Tools on Websites</h1>
+      <div className="flex items-center space-x-4">
+        <select
+          value={lang}
+          onChange={e => setLang(e.target.value)}
+          className="p-2 rounded bg-gray-800 text-white"
+        >
+          {Object.keys(translations).map(code => (
+            <option key={code} value={code} className="bg-gray-800">
+              {code.toUpperCase()}
+            </option>
+          ))}
+        </select>
+        <nav className="space-x-2">
+          {tools.map(key => (
+            <button
+              key={key}
+              onClick={() => setActiveTool(key)}
+              className={`px-4 py-2 rounded ${
+                activeTool === key ? "bg-blue-600" : "bg-gray-700 hover:bg-gray-600"
+              }`}
+            >
+              {t[key]}
+            </button>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+// Component implementations omitted for brevity; assume previous full implementations here.
+
 export default function App() {
-  const languages = ["en", "de"];
+  const languages = Object.keys(translations);
   const tools = ["minecraft", "discord", "roblox", "letter", "prank"];
 
   const [lang, setLang] = useState("en");
@@ -22,93 +159,48 @@ export default function App() {
   const t = translations[lang];
 
   const detectPage = () => {
-    setPages([...pages, { title: document.title, url: window.location.href }]);
+    setPages(prev => [...prev, { title: document.title, url: window.location.href }]);
   };
 
   const addPage = () => {
-    if (!newTitle || !newURL) return;
-    setPages([...pages, { title: newTitle, url: newURL }]);
+    if (!newTitle.trim() || !newURL.trim()) return;
+    setPages(prev => [...prev, { title: newTitle.trim(), url: newURL.trim() }]);
     setNewTitle("");
     setNewURL("");
   };
 
   return (
-    <div className="dark bg-gray-900 text-white min-h-screen font-sans flex">
-      <aside className="w-64 bg-gray-800 p-4 space-y-4">
-        <h2 className="text-xl font-semibold">Pages</h2>
-        <button onClick={detectPage} className="block w-full rounded bg-blue-600 py-1 font-medium">
-          Auto-detect Current Page
-        </button>
-        <div className="space-y-2">
-          <input
-            type="text"
-            placeholder="Title"
-            value={newTitle}
-            onChange={e => setNewTitle(e.target.value)}
-            className="w-full rounded bg-gray-700 p-1"
-          />
-          <input
-            type="url"
-            placeholder="URL"
-            value={newURL}
-            onChange={e => setNewURL(e.target.value)}
-            className="w-full rounded bg-gray-700 p-1"
-          />
-          <button onClick={addPage} className="block w-full rounded bg-green-600 py-1 font-medium">
-            Add Page
-          </button>
-        </div>
-        <nav className="overflow-y-auto max-h-1/2 space-y-1">
-          {pages.map((p, i) => (
-            <div
-              key={i}
-              onClick={() => setSelectedPage(i)}
-              className={`cursor-pointer rounded p-1 ${
-n              selectedPage === i ? "bg-blue-500" : "hover:bg-gray-700"
-              }`}
-            >
-              {p.title}
-            </div>
-          ))}
-        </nav>
-      </aside>
-
+    <div className="dark bg-gray-900 text-white min-h-screen flex">
+      <Sidebar
+        pages={pages}
+        onDetect={detectPage}
+        onAdd={addPage}
+        onSelect={setSelectedPage}
+        selectedIndex={selectedPage}
+        newTitle={newTitle}
+        setNewTitle={setNewTitle}
+        newURL={newURL}
+        setNewURL={setNewURL}
+        t={t}
+      />
       <div className="flex-1 flex flex-col">
-        <header className="flex items-center justify-between p-4">
-          <h1 className="text-2xl font-bold">Tools on Websites</h1>
-          <div className="flex items-center space-x-4">
-            <select
-              value={lang}
-              onChange={e => setLang(e.target.value)}
-              className="p-2 rounded bg-gray-800"
-            >
-              {languages.map(code => (
-                <option key={code} value={code}>{code.toUpperCase()}</option>
-              ))}
-            </select>
-            <nav className="space-x-2">
-              {tools.map(key => (
-                <button
-                  key={key}
-                  onClick={() => setActiveTool(key)}
-                  className={`px-3 py-1 rounded ${
-n                    activeTool === key ? "bg-blue-600" : "bg-gray-700"
-                  }`}
-                >
-                  {t[key]}
-                </button>
-              ))}
-            </nav>
-          </div>
-        </header>
-
+        <Header
+          lang={lang}
+          setLang={setLang}
+          tools={tools}
+          activeTool={activeTool}
+          setActiveTool={setActiveTool}
+          t={t}
+        />
         {selectedPage !== null && (
-          <div className="px-4 pb-2 border-b border-gray-700">
-            <strong>Selected:</strong> {pages[selectedPage].title} (<a href={pages[selectedPage].url} className="text-blue-400" target="_blank">open</a>)
+          <div className="px-6 py-2 bg-gray-800 border-b border-gray-700">
+            <strong>{t.selected}:</strong> {pages[selectedPage].title}{" "}
+            (<a href={pages[selectedPage].url} className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">
+              {t.open}
+            </a>)
           </div>
         )}
-
-        <main className="p-6 flex-1 overflow-y-auto">
+        <main className="p-6 overflow-auto flex-1">
           {activeTool === "minecraft" && <MinecraftCombiner t={t} />}
           {activeTool === "discord" && <DiscordTimestampPicker t={t} />}
           {activeTool === "roblox" && <RobloxTools t={t} />}
@@ -119,8 +211,6 @@ n                    activeTool === key ? "bg-blue-600" : "bg-gray-700"
     </div>
   );
 }
-
-// ...component implementations remain unchanged...
 
 const container = document.getElementById("root");
 const root = createRoot(container);

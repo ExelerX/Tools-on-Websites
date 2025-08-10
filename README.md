@@ -11,6 +11,10 @@
 
 `Bugs: (Beta) Some really small bugs`
 
+#### [Resource Pack Creator](https://exelerx.github.io/Tools-on-Websites/Minecraft/Combiner/Creator%20(Beta)/resourcepack-creator.html)
+
+`Bugs: Not tested yet, except picture, sound, and name/version`
+
 ---
 
 ### <font color="darkblue">Discord</font>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ResourcePack Maker</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<style>
+:root{--bg:#0b0f14;--panel:#121821;--muted:#1a2330;--text:#e6edf3;--sub:#9fb0c6;--accent:#4ea1ff;--accent-2:#8b5cf6;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--ring:#2b3a50}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(1200px 800px at 20% -20%,#122033 0%,#0b0f14 55%) fixed;color:var(--text);font:500 15px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.container{max-width:1100px;margin:0 auto;padding:28px}
+.header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+.h1{font-size:26px;font-weight:800;letter-spacing:.3px}
+.hint{color:var(--sub);font-size:13px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--ring);border-radius:16px;padding:16px;backdrop-filter:blur(4px)}
+.card h2{margin:4px 0 12px;font-size:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--ring);border-radius:12px;color:var(--text);padding:12px 12px;font:600 14px/1.4 Inter,ui-sans-serif;outline:0}
+.input::placeholder,textarea::placeholder{color:#7f8ea3}
+label{display:block;margin:10px 0 6px;font-size:13px;color:#c7d6eb}
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid transparent;border-radius:12px;padding:12px 14px;font-weight:800;letter-spacing:.2px}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001428}
+.btn.ghost{background:transparent;border-color:var(--ring);color:#fff}
+.flex{display:flex;gap:10px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--muted);border:1px solid var(--ring);color:#b9c7da;padding:6px 10px;border-radius:999px;font:700 12px/1 Inter}
+.drop{border:1.5px dashed #2b3a50;border-radius:14px;background:rgba(255,255,255,.02);padding:14px;display:grid;gap:10px;place-items:center;text-align:center}
+.drop input{display:none}
+.small{font-size:12px;color:#a7b7ce}
+.preview{max-height:220px;overflow:auto;border-radius:12px;border:1px solid var(--ring);background:var(--panel);padding:10px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 12px}
+.kv div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hr{height:1px;background:linear-gradient(90deg,transparent,#2b3a50,transparent);margin:10px 0 6px}
+.footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.toast{position:fixed;right:18px;bottom:18px;background:#0d1a27;border:1px solid var(--ring);color:#cae3ff;padding:12px 14px;border-radius:12px;opacity:0;transform:translateY(8px);transition:all .25s}
+.toast.show{opacity:1;transform:none}
+.tabs{display:flex;gap:8px;margin:8px 0 12px}
+.tab{padding:8px 12px;border:1px solid var(--ring);background:var(--muted);border-radius:999px;font-weight:700;font-size:12px;cursor:pointer}
+.tab.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001428;border-color:transparent}
+.table{width:100%;border-collapse:collapse;font-size:13px}
+.table th,.table td{padding:8px 10px;border-bottom:1px solid #213045}
+.table th{color:#c7d6eb;text-align:left;font-weight:800}
+.outline{border:1px dashed #2b3a50;border-radius:12px;padding:10px}
+.switch{position:relative;width:46px;height:26px;border-radius:999px;background:#203049;border:1px solid var(--ring);cursor:pointer}
+.switch i{position:absolute;width:22px;height:22px;border-radius:50%;background:#cfe6ff;left:2px;top:2px;transition:left .2s}
+.switch.active{background:#2d425b}
+.switch.active i{left:22px}
+ul{margin:8px 0 0 16px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="h1">ResourcePack Maker</div>
+    <div class="flex">
+      <span class="badge">Client-side</span>
+      <span class="badge">No install</span>
+      <span class="badge">ZIP output</span>
+    </div>
+  </div>
+  <div class="hint">Create Minecraft resource packs quickly and safely, entirely in your browser.</div>
+  <div class="grid">
+    <div class="card">
+      <h2>Pack</h2>
+      <div class="row">
+        <div>
+          <label>Pack name</label>
+          <input class="input" id="packName" placeholder="My Pack" />
+        </div>
+        <div>
+          <label>Namespace</label>
+          <input class="input" id="namespace" placeholder="minecraft" value="minecraft" />
+        </div>
+      </div>
+      <label>Description</label>
+      <textarea class="input" id="desc" rows="3" placeholder="Short description shown in Minecraft."></textarea>
+      <div class="row" style="margin-top:8px">
+        <div>
+          <label>Pack format</label>
+          <input class="input" id="packFormat" type="number" min="1" step="1" placeholder="Enter a number" />
+        </div>
+        <div class="row" style="gap:8px">
+          <div>
+            <label>Min format (opt.)</label>
+            <input class="input" id="fmtMin" type="number" min="1" step="1" placeholder="Optional" />
+          </div>
+          <div>
+            <label>Max format (opt.)</label>
+            <input class="input" id="fmtMax" type="number" min="1" step="1" placeholder="Optional" />
+          </div>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-preset="1.20.x">1.20.x</button>
+        <button class="tab" data-preset="1.21.x">1.21.x</button>
+        <button class="tab" data-preset="Manual">Manual</button>
+      </div>
+      <div class="outline small" id="presetInfo">Choose a preset or type the pack format manually. You can also set a supported range for broader compatibility.</div>
+      <div class="hr"></div>
+      <h2>Pack icon</h2>
+      <div class="row">
+        <label class="drop" style="cursor:pointer">
+          <input type="file" id="packIcon" accept="image/png,image/jpeg,image/webp" />
+          <div>
+            <div style="font-weight:800">Drop or click to upload pack.png</div>
+            <div class="small">PNG recommended. Will be saved as pack.png.</div>
+          </div>
+        </label>
+        <div>
+          <label>Auto-resize to 256×256</label>
+          <div class="switch" id="resizeSwitch"><i></i></div>
+          <div class="small">Keeps file small and compatible.</div>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <h2>Textures</h2>
+      <div class="row">
+        <label class="drop">
+          <input type="file" id="blk" accept="image/png" multiple />
+          <div>
+            <div style="font-weight:800">Block textures</div>
+            <div class="small">Placed under assets/&lt;namespace&gt;/textures/block/</div>
+          </div>
+        </label>
+        <label class="drop">
+          <input type="file" id="itm" accept="image/png" multiple />
+          <div>
+            <div style="font-weight:800">Item textures</div>
+            <div class="small">Placed under assets/&lt;namespace&gt;/textures/item/</div>
+          </div>
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="drop">
+          <input type="file" id="gui" accept="image/png" multiple />
+          <div>
+            <div style="font-weight:800">GUI textures</div>
+            <div class="small">Placed under assets/&lt;namespace&gt;/textures/gui/</div>
+          </div>
+        </label>
+        <label class="drop">
+          <input type="file" id="misc" accept="image/png" multiple />
+          <div>
+            <div style="font-weight:800">Misc textures</div>
+            <div class="small">Placed under assets/&lt;namespace&gt;/textures/misc/</div>
+          </div>
+        </label>
+      </div>
+      <div class="hr"></div>
+      <h2>Sounds</h2>
+      <div class="row">
+        <label class="drop">
+          <input type="file" id="snd" accept="audio/ogg" multiple />
+          <div>
+            <div style="font-weight:800">Sound files (.ogg)</div>
+            <div class="small">Placed under assets/&lt;namespace&gt;/sounds/ with sounds.json auto-generated.</div>
+          </div>
+        </label>
+        <div>
+          <label>Auto-map</label>
+          <button class="btn ghost" id="autoMapBtn">Guess events & paths</button>
+          <div class="small">Guesses event names and folders from filenames.</div>
+        </div>
+      </div>
+      <div id="soundsTable" class="outline" style="margin-top:10px"></div>
+      <div class="hr"></div>
+      <h2>Custom folder</h2>
+      <div class="row">
+        <div>
+          <label>Folder path</label>
+          <input class="input" id="customPath" placeholder="assets/minecraft/textures/entity/" />
+        </div>
+        <label class="drop">
+          <input type="file" id="customFiles" accept="*/*" multiple />
+          <div>
+            <div style="font-weight:800">Files for custom folder</div>
+            <div class="small">Use this for any extra folders you need.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Preview</h2>
+      <div class="preview" id="tree"></div>
+      <div class="hr"></div>
+      <h2>How it works</h2>
+      <ul class="small">
+        <li>Nothing uploads; everything stays in your browser.</li>
+        <li>Set name, description and pack format.</li>
+        <li>Add a pack icon and textures.</li>
+        <li>Add .ogg sounds and map them to events.</li>
+        <li>Download the ZIP and drop it into your resourcepacks folder.</li>
+      </ul>
+      <div class="hr"></div>
+      <table class="table small">
+        <thead><tr><th>Tip</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Use 256×256 pack.png</td><td>Looks crisp and loads fast</td></tr>
+          <tr><td>Keep file names lowercase</td><td>Minecraft paths are case-sensitive</td></tr>
+          <tr><td>Use .ogg for sounds</td><td>Minecraft expects Ogg Vorbis</td></tr>
+        </tbody>
+      </table>
+      <div class="footer">
+        <button class="btn ghost" id="resetBtn">Reset</button>
+        <button class="btn primary" id="downloadBtn">Download ZIP</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const el=(q)=>document.querySelector(q)
+const els=(q)=>[...document.querySelectorAll(q)]
+const state={icon:null,resize:true,files:{block:[],item:[],gui:[],misc:[],custom:[]},customPath:"assets/minecraft/textures/entity/",sounds:[]}
+const tree=el('#tree')
+const toast=(t)=>{const x=el('#toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2200)}
+const presets={"1.20.x":{pack_format:15,info:"Typical for 1.20 line. Adjust if needed."},"1.21.x":{pack_format:18,info:"Typical for 1.21 line. Adjust if needed."},"Manual":{pack_format:"",info:"Enter format manually."}}
+els('.tab').forEach(b=>b.onclick=()=>{els('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');const k=b.dataset.preset;const p=presets[k];el('#packFormat').value=p.pack_format;el('#presetInfo').textContent=p.info})
+const toggle=el('#resizeSwitch');toggle.onclick=()=>{toggle.classList.toggle('active');state.resize=toggle.classList.contains('active')}
+toggle.classList.add('active')
+const readFiles=(list)=>Promise.all([...list].map(f=>f))
+const handleInput=(id,key)=>{el(id).addEventListener('change',async e=>{state.files[key]=await readFiles(e.target.files);renderTree()})}
+handleInput('#blk','block')
+handleInput('#itm','item')
+handleInput('#gui','gui')
+handleInput('#misc','misc')
+el('#customFiles').addEventListener('change',async e=>{state.files.custom=await readFiles(e.target.files);renderTree()})
+el('#customPath').addEventListener('input',e=>{state.customPath=e.target.value})
+el('#packIcon').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;state.icon=f;renderTree()})
+el('#snd').addEventListener('change',async e=>{state.sounds=[...e.target.files].map(f=>({file:f,event:"",path:"",stream:false,replace:false}));renderSounds();renderTree()})
+function bytes(n){if(!n&&n!==0)return"";if(n<1024)return n+" B";if(n<1048576)return (n/1024).toFixed(1)+" KB";return (n/1048576).toFixed(1)+" MB"}
+function guessFromName(n){const base=n.replace(/\.[^.]+$/,'');if(base.includes('.'))return {event:base,path:base.replace(/\./g,'/')};if(base.includes('_'))return {event:base.replace(/_/g,'.'),path:base.replace(/_/g,'/')};return {event:base,path:base}}
+function renderSounds(){const wrap=el('#soundsTable');if(!state.sounds.length){wrap.innerHTML='<div class="small">Add .ogg files to define sound events. Filenames like <b>entity.player.levelup.ogg</b> or <b>entity_player_levelup.ogg</b> will auto-map.</div>';return}let rows='<table class="table small"><thead><tr><th>File</th><th>Event</th><th>Path</th><th>Stream</th><th>Replace</th></tr></thead><tbody>';state.sounds.forEach((s,i)=>{rows+=`<tr data-i="${i}"><td>${s.file.name}</td><td><input class="input" data-k="event" value="${s.event||''}"></td><td><input class="input" data-k="path" value="${s.path||''}"></td><td><input type="checkbox" data-k="stream" ${s.stream?'checked':''}></td><td><input type="checkbox" data-k="replace" ${s.replace?'checked':''}></td></tr>`});rows+='</tbody></table>';wrap.innerHTML=rows}
+el('#soundsTable').addEventListener('input',e=>{const tr=e.target.closest('tr');if(!tr)return;const i=+tr.dataset.i;const k=e.target.dataset.k;if(k){state.sounds[i][k]=e.target.type==='checkbox'?e.target.checked:e.target.value}})
+el('#autoMapBtn').addEventListener('click',()=>{state.sounds=state.sounds.map(s=>{const g=guessFromName(s.file.name);return {...s,event:s.event||g.event,path:s.path||g.path}});renderSounds();toast('Auto-mapped')})
+function renderTree(){const ns=el('#namespace').value.trim()||'minecraft';const rows=[];if(state.icon)rows.push(["pack.png",bytes(state.icon.size)]);const push=(base,key)=>{state.files[key].forEach(f=>{rows.push([`assets/${ns}/textures/${base}${base?"/":""}${f.name}`,bytes(f.size)])})};push('block','block');push('item','item');push('gui','gui');push('misc','misc');state.files.custom.forEach(f=>{rows.push([`${state.customPath.replace(/\/+$/,'')}/${f.name}`,bytes(f.size)])});state.sounds.forEach(s=>{const g=s.path||guessFromName(s.file.name).path;rows.push([`assets/${ns}/sounds/${g}.ogg`,bytes(s.file.size)])});if(state.sounds.length)rows.push([`assets/${ns}/sounds.json`,bytes(JSON.stringify({},null,2).length)]);if(!rows.length){tree.innerHTML='<div class="small">Your file tree will appear here.</div>';return}let html='<div class="kv">';rows.forEach(r=>{html+=`<div>${r[0]}</div><div style="color:#88a2bf;text-align:right">${r[1]}</div>`});html+="</div>";tree.innerHTML=html}
+function sanitizeName(s){return (s||'ResourcePack').replace(/[^a-z0-9\-_. ]/gi,'').trim().replace(/\s+/g,'_')}
+async function imageToPngBlob(file,resize){const img=await file.arrayBuffer().then(b=>createImageBitmap(new Blob([b])));const c=document.createElement('canvas');const w=resize?256:img.width;const h=resize?256:img.height;c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,w,h);return await new Promise(r=>c.toBlob(r,'image/png',0.92))}
+function parseNum(v){const n=parseInt(v,10);return Number.isFinite(n)&&n>0?n:null}
+el('#resetBtn').onclick=()=>{el('#packName').value='';el('#desc').value='';el('#namespace').value='minecraft';el('#packFormat').value='';el('#fmtMin').value='';el('#fmtMax').value='';state.icon=null;Object.keys(state.files).forEach(k=>state.files[k]=[]);state.sounds=[];renderSounds();renderTree();toast('Reset done')}
+el('#downloadBtn').onclick=async()=>{
+  const name=sanitizeName(el('#packName').value)||'ResourcePack';
+  const desc=el('#desc').value||'';
+  const ns=el('#namespace').value.trim()||'minecraft';
+  const pf=parseNum(el('#packFormat').value);
+  if(!pf){toast('Enter a valid pack format');return}
+  const min=parseNum(el('#fmtMin').value);
+  const max=parseNum(el('#fmtMax').value);
+  const zip=new JSZip();
+  const meta={pack:{pack_format:pf,description:desc}};
+  if(min||max){const o={};if(min)o.min_inclusive=min;if(max)o.max_inclusive=max;meta.pack.supported_formats=o}
+  zip.file('pack.mcmeta',JSON.stringify(meta,null,2))
+  if(state.icon){const blob=await imageToPngBlob(state.icon,state.resize);zip.file('pack.png',blob)}
+  const add=(base,key)=>Promise.all(state.files[key].map(async f=>{const p=`assets/${ns}/textures/${base}${base?"/":""}${f.name}`;zip.file(p,await f.arrayBuffer())}))
+  await add('block','block');await add('item','item');await add('gui','gui');await add('misc','misc');
+  await Promise.all(state.files.custom.map(async f=>{const p=`${state.customPath.replace(/\/+$/,'')}/${f.name}`;zip.file(p,await f.arrayBuffer())}))
+  const soundsIndex={}
+  for(const s of state.sounds){const g=guessFromName(s.file.name);const evt=s.event||g.event;const pth=(s.path||g.path);if(!evt||!pth)continue;const data=await s.file.arrayBuffer();zip.file(`assets/${ns}/sounds/${pth}.ogg`,data);if(!soundsIndex[evt])soundsIndex[evt]={sounds:[],replace:false};if(s.replace)soundsIndex[evt].replace=true;soundsIndex[evt].sounds.push(Object.assign({name:pth},s.stream?{stream:true}:{ }))}
+  if(Object.keys(soundsIndex).length){zip.file(`assets/${ns}/sounds.json`,JSON.stringify(soundsIndex,null,2))}
+  const blob=await zip.generateAsync({type:'blob'})
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${name}.zip`;a.click();URL.revokeObjectURL(a.href);toast('ZIP ready')
+}
+renderSounds()
+renderTree()
+</script>
+</body>
+</html>

@@ -20,12 +20,15 @@ const versionPackFormatMap = {
     "1.18 - 1.18.2": 8,
     "1.19 - 1.19.2": 9,
     "1.19.3": 12,
-    "1.19.4 - 1.20.1": 13,
-    "1.20.2": 14,
-    "1.21 - 1.21.6": 55,
+    "1.19.4": 13,
+    "1.20 - 1.20.1": 15,
+    "1.20.2": 18,
+    "1.20.3 - 1.20.4": 22,
+    "1.21 - 1.21.1": 34,
+    "1.21.5": 55,
     "1.21.6": 63,
-    "1.21.7 - 1.21.9": 65.1
-};
+    "1.21.7": 64
+}
 
 
 function populateVersionSelect() {
@@ -212,3 +215,4 @@ combineButton.addEventListener('click', async () => {
         console.error('Fehler beim Erstellen der ZIP-Datei:', error);
     }
 });
+

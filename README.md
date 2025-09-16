@@ -55,7 +55,7 @@
 
 #### [Website Spam](https://exelerx.github.io/Tools-on-Websites/Prank-Links/Window_Spam.html)
 
-`It opens the websites really fast!!! The browser may automatically disable it so nothing opens.`
+`It opens the websites really fast, so be warned!!! The browser may automatically disable it!`
 
 `Bugs: None or Unknown`
 

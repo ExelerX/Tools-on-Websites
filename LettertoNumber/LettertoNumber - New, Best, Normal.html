@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Letter ↔ Number Translator</title>
+<style>
+:root {
+  --bg: #020817;
+  --bg-grad1: #020817;
+  --bg-grad2: #020817;
+  --accent: #22c55e;
+  --accent-soft: rgba(34, 197, 94, 0.13);
+  --accent-soft2: rgba(56, 189, 248, 0.14);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: rgba(148, 163, 253, 0.18);
+  --input-bg: rgba(10, 16, 30, 0.96);
+  --hover: rgba(148, 163, 253, 0.14);
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --transition-fast: 0.18s ease;
+  --transition-med: 0.25s ease;
+  --shadow-soft: 0 18px 55px rgba(15,23,42,0.85);
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", -system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  min-height: 100vh;
+  font-family: var(--font-main);
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(56,189,248,0.12), transparent 55%),
+    radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 55%),
+    radial-gradient(circle at bottom, rgba(79,70,229,0.18), transparent 60%),
+    linear-gradient(to bottom, var(--bg-grad1), var(--bg-grad2));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-wrap {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.card {
+  background: radial-gradient(circle at top, var(--accent-soft2), transparent 120%) border-box,
+              linear-gradient(to bottom right, rgba(15,23,42,0.98), rgba(2,6,23,0.98));
+  border-radius: var(--radius-lg);
+  padding: 26px 22px 18px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(22px);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition-med), transform var(--transition-med), border-color var(--transition-med);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: -140px;
+  right: -60px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(79,70,229,0.16), transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.card:hover {
+  box-shadow: 0 26px 80px rgba(15,23,42,0.98);
+  transform: translateY(-2px);
+  border-color: rgba(129,140,248,0.26);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin: 0;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.9);
+  border: 1px solid rgba(148,163,253,0.4);
+  font-size: 0.7rem;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge span.icon {
+  font-size: 0.8rem;
+}
+
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+select {
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  background: rgba(6,8,20,0.98);
+  color: var(--text);
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 150px;
+}
+
+select:hover {
+  background: var(--hover);
+  border-color: var(--accent);
+}
+
+.toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(6,8,20,0.98);
+  border: 1px solid rgba(75,85,99,0.9);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggle-label span {
+  font-size: 0.7rem;
+}
+
+.toggle {
+  position: relative;
+  width: 28px;
+  height: 15px;
+  border-radius: 999px;
+  background: rgba(75,85,99,0.9);
+  transition: all var(--transition-fast);
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  transition: all var(--transition-fast);
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-input:checked + .toggle .toggle-knob {
+  transform: translateX(11px);
+  background: #022c22;
+}
+
+.toggle-input:checked + .toggle {
+  background: var(--accent);
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.section {
+  background: var(--input-bg);
+  border-radius: var(--radius-md);
+  padding: 10px 10px 9px;
+  border: 1px solid rgba(75,85,99,0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.section-sub {
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+textarea {
+  flex: 1;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(75,85,99,0.9);
+  background: rgba(4,7,18,0.98);
+  padding: 8px;
+  color: var(--text);
+  font-size: 0.78rem;
+  resize: vertical;
+  outline: none;
+  transition: all var(--transition-fast);
+  min-height: 88px;
+}
+
+textarea::placeholder {
+  color: rgba(148,163,253,0.4);
+}
+
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(34,197,94,0.18);
+  background: rgba(2,6,23,1);
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.btn {
+  flex: 1;
+  padding: 7px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  border: 1px solid rgba(75,85,99,0.9);
+  background: rgba(6,8,20,0.98);
+  color: var(--muted);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn span.icon {
+  font-size: 0.8rem;
+}
+
+.btn.primary {
+  background: linear-gradient(to right, var(--accent), #4ade80);
+  color: #020817;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.btn:hover {
+  background: var(--hover);
+  color: var(--text);
+  border-color: var(--accent);
+  box-shadow: 0 8px 18px rgba(15,23,42,0.9);
+  transform: translateY(-1px);
+}
+
+.btn.primary:hover {
+  box-shadow: 0 10px 22px rgba(22,163,74,0.35);
+}
+
+.output-label {
+  font-size: 0.63rem;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.output-box {
+  margin-top: 3px;
+  padding: 7px 7px 6px;
+  border-radius: 8px;
+  background: rgba(2,6,23,1);
+  border: 1px solid rgba(51,65,85,0.96);
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: rgba(148,163,253,0.95);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 40px;
+}
+
+.footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(20px);
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.98);
+  border: 1px solid rgba(34,197,94,0.9);
+  font-size: 0.7rem;
+  color: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 40;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 820px) {
+  .card {
+    padding: 20px 14px 14px;
+  }
+  .sections {
+    grid-template-columns: 1fr;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app-wrap">
+  <div class="card">
+    <div class="header">
+      <div class="title-block">
+        <h1>Universal Letter ↔ Number</h1>
+        <p class="subtitle">Reversible encoding for every character, emoji, symbol and space.</p>
+      </div>
+      <div class="badge">
+        <span class="icon">🧬</span>
+        lossless • unicode-safe
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <select id="language">
+        <option value="en">English UI</option>
+        <option value="de">Deutsch UI</option>
+      </select>
+
+      <div class="toggle-group">
+        <label class="toggle-label">
+          <input id="autoText" type="checkbox" class="toggle-input" checked>
+          <div class="toggle">
+            <div class="toggle-knob"></div>
+          </div>
+          <span>Live Text → Numbers</span>
+        </label>
+
+        <label class="toggle-label">
+          <input id="autoNumber" type="checkbox" class="toggle-input">
+          <div class="toggle">
+            <div class="toggle-knob"></div>
+          </div>
+          <span>Live Numbers → Text</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="sections">
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title" id="t_textToNum_title">Text → Numbers</div>
+            <div class="section-sub" id="t_textToNum_desc">Enter any text, result is codepoints.</div>
+          </div>
+        </div>
+        <textarea id="textInput" placeholder="Type your text here... 🌍😈🔐"></textarea>
+        <div class="actions">
+          <button class="btn primary" id="btnConvertText">
+            <span class="icon">⚡</span>
+            <span id="t_convertToNum">Convert to numbers</span>
+          </button>
+          <button class="btn" id="btnCopyNum">
+            <span class="icon">📋</span>
+            <span id="t_copyNum">Copy numbers</span>
+          </button>
+        </div>
+        <div class="output-label" id="t_outputNumLabel">Encoded output:</div>
+        <div id="numberOutput" class="output-box"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title" id="t_numToText_title">Numbers → Text</div>
+            <div class="section-sub" id="t_numToText_desc">Paste codes (space/comma separated).</div>
+          </div>
+        </div>
+        <textarea id="numberInput" placeholder="Example: 85 110 105 99 111 100 101 32 128512"></textarea>
+        <div class="actions">
+          <button class="btn primary" id="btnConvertNum">
+            <span class="icon">✨</span>
+            <span id="t_convertToText">Convert to text</span>
+          </button>
+          <button class="btn" id="btnCopyText">
+            <span class="icon">📋</span>
+            <span id="t_copyText">Copy text</span>
+          </button>
+        </div>
+        <div class="output-label" id="t_outputTextLabel">Decoded output:</div>
+        <div id="textOutput" class="output-box"></div>
+      </div>
+    </div>
+
+    <div class="footer" id="t_footer">
+      No API • No tracking • 1:1 reversible for all Unicode characters.
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast">Copied</div>
+
+<script>
+const ui = {
+  en: {
+    title: "Universal Letter ↔ Number",
+    subtitle: "Reversible encoding for every character, emoji, symbol and space.",
+    textToNumTitle: "Text → Numbers",
+    textToNumDesc: "Enter any text, result is codepoints.",
+    numToTextTitle: "Numbers → Text",
+    numToTextDesc: "Paste codes (space/comma separated).",
+    convertToNum: "Convert to numbers",
+    convertToText: "Convert to text",
+    copyNum: "Copy numbers",
+    copyText: "Copy text",
+    outputNumLabel: "Encoded output:",
+    outputTextLabel: "Decoded output:",
+    footer: "No API • No tracking • 1:1 reversible for all Unicode characters.",
+    toastCopied: "Copied to clipboard"
+  },
+  de: {
+    title: "Universal Buchstabe ↔ Zahl",
+    subtitle: "Verlustfreie Codierung für alle Zeichen, Emojis, Symbole und Leerzeichen.",
+    textToNumTitle: "Text → Zahlen",
+    textToNumDesc: "Gib beliebigen Text ein, Ausgabe sind Codepoints.",
+    numToTextTitle: "Zahlen → Text",
+    numToTextDesc: "Füge Codes ein (mit Leerzeichen/Komma getrennt).",
+    convertToNum: "In Zahlen umwandeln",
+    convertToText: "In Text umwandeln",
+    copyNum: "Zahlen kopieren",
+    copyText: "Text kopieren",
+    outputNumLabel: "Kodierte Ausgabe:",
+    outputTextLabel: "Dekodierte Ausgabe:",
+    footer: "Keine API • Kein Tracking • 1:1 reversibel für alle Unicode-Zeichen.",
+    toastCopied: "In Zwischenablage kopiert"
+  }
+};
+
+function applyLanguage(lang) {
+  const t = ui[lang] || ui.en;
+  document.querySelector("h1").innerText = t.title;
+  document.querySelector(".subtitle").innerText = t.subtitle;
+  document.getElementById("t_textToNum_title").innerText = t.textToNumTitle;
+  document.getElementById("t_textToNum_desc").innerText = t.textToNumDesc;
+  document.getElementById("t_numToText_title").innerText = t.numToTextTitle;
+  document.getElementById("t_numToText_desc").innerText = t.numToTextDesc;
+  document.getElementById("t_convertToNum").innerText = t.convertToNum;
+  document.getElementById("t_convertToText").innerText = t.convertToText;
+  document.getElementById("t_copyNum").innerText = t.copyNum;
+  document.getElementById("t_copyText").innerText = t.copyText;
+  document.getElementById("t_outputNumLabel").innerText = t.outputNumLabel;
+  document.getElementById("t_outputTextLabel").innerText = t.outputTextLabel;
+  document.getElementById("t_footer").innerText = t.footer;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 1300);
+}
+
+function encodeTextToNumbers(text) {
+  const codes = [];
+  for (let i = 0; i < text.length; ) {
+    const cp = text.codePointAt(i);
+    codes.push(cp);
+    i += cp > 0xffff ? 2 : 1;
+  }
+  return codes.join(" ");
+}
+
+function decodeNumbersToText(raw) {
+  const parts = raw.split(/[,\s]+/).filter(Boolean);
+  let out = "";
+  for (const p of parts) {
+    const n = parseInt(p, 10);
+    if (!isNaN(n) && n >= 0 && n <= 1114111) {
+      out += String.fromCodePoint(n);
+    } else {
+      return "";
+    }
+  }
+  return out;
+}
+
+function syncTextToNumbers() {
+  const text = document.getElementById("textInput").value;
+  const encoded = text ? encodeTextToNumbers(text) : "";
+  document.getElementById("numberOutput").innerText = encoded;
+  if (encoded) document.getElementById("numberInput").value = encoded;
+}
+
+function syncNumbersToText() {
+  const raw = document.getElementById("numberInput").value.trim();
+  const decoded = raw ? decodeNumbersToText(raw) : "";
+  document.getElementById("textOutput").innerText = decoded || "";
+  if (decoded) document.getElementById("textInput").value = decoded;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  applyLanguage("en");
+
+  const languageSelect = document.getElementById("language");
+  languageSelect.addEventListener("change", () => {
+    applyLanguage(languageSelect.value);
+  });
+
+  const autoText = document.getElementById("autoText");
+  const autoNumber = document.getElementById("autoNumber");
+
+  document.getElementById("btnConvertText").addEventListener("click", () => {
+    syncTextToNumbers();
+  });
+
+  document.getElementById("btnConvertNum").addEventListener("click", () => {
+    syncNumbersToText();
+  });
+
+  document.getElementById("btnCopyNum").addEventListener("click", () => {
+    const lang = languageSelect.value;
+    const t = ui[lang] || ui.en;
+    const text = document.getElementById("numberOutput").innerText.trim();
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(t.toastCopied);
+    });
+  });
+
+  document.getElementById("btnCopyText").addEventListener("click", () => {
+    const lang = languageSelect.value;
+    const t = ui[lang] || ui.en;
+    const text = document.getElementById("textOutput").innerText.trim();
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(t.toastCopied);
+    });
+  });
+
+  document.getElementById("textInput").addEventListener("input", () => {
+    if (autoText.checked) syncTextToNumbers();
+  });
+
+  document.getElementById("numberInput").addEventListener("input", () => {
+    if (autoNumber.checked) syncNumbersToText();
+  });
+});
+</script>
+</body>
+</html>

@@ -39,6 +39,10 @@
 ### <font color="green">Letter to Number:</font>
 
 
+#### [Origin - New](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/LettertoNumber_New_5.4.html)
+
+`Bugs: None or Unknown`
+
 #### [Origin](https://exelerx.github.io/Tools-on-Websites/LettertoNumber/LettertoNumber.html)
 
 `Bugs: None or Unknown`

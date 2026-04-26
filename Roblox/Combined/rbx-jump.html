@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBX Jump</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070e;--surf:#0d0d1a;--card:#111120;--border:#1a1a2e;--bright:#252542;
+  --acc:#00c8ff;--adim:rgba(0,200,255,.1);--acc2:#ff2d6b;--a2dim:rgba(255,45,107,.1);
+  --tx:#dde1f2;--mu:#4f4f72;--mu2:#7a7a9a;--ok:#00e87a;--warn:#ffaa00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden;font-size:13px}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,200,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.022) 1px,transparent 1px);background-size:55px 55px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 3px);pointer-events:none;z-index:9999}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:28px}
+.logo{font-family:'Rajdhani',sans-serif;font-size:44px;font-weight:700;letter-spacing:4px;line-height:1;color:var(--acc)}
+.logo span{color:var(--acc2)}
+.tagline{font-size:10px;color:var(--mu);letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+
+.tabs{display:flex;gap:2px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.tab-btn{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 26px;border:none;background:transparent;color:var(--mu2);cursor:pointer;position:relative;transition:color .2s}
+.tab-btn::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--acc);transform:scaleX(0);transition:transform .2s}
+.tab-btn:hover{color:var(--tx)}
+.tab-btn.active{color:var(--acc)}
+.tab-btn.active::after{transform:scaleX(1)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+.layout{display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+
+.panel{background:var(--surf);border:1px solid var(--border);border-radius:3px;padding:18px}
+.panel-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--mu);text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.reset-btn{font-size:9px;letter-spacing:1px;color:var(--mu);cursor:pointer;background:none;border:none;font-family:'Space Mono',monospace;text-decoration:underline;padding:0}
+.reset-btn:hover{color:var(--acc)}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:9px;letter-spacing:2px;color:var(--mu2);text-transform:uppercase;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--tx);font-family:'Space Mono',monospace;font-size:12px;padding:7px 11px;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--acc);box-shadow:0 0 0 2px var(--adim)}
+.field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234f4f72'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.field select option{background:var(--card)}
+.range-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field-note{font-size:9px;color:var(--mu);margin-top:4px;letter-spacing:.5px}
+
+.btn{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:2px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none !important;box-shadow:none !important}
+.btn-roll{font-size:20px;padding:15px 28px;width:100%;background:var(--acc);color:#000}
+.btn-roll:hover:not(:disabled){background:#fff;box-shadow:0 0 30px rgba(0,200,255,.4);transform:translateY(-1px)}
+.btn-roblox{font-size:13px;padding:9px 18px;background:var(--acc2);color:#fff;box-shadow:0 0 12px rgba(255,45,107,.25)}
+.btn-roblox:hover:not(:disabled){background:#ff5585;box-shadow:0 0 25px rgba(255,45,107,.45)}
+.btn-web{font-size:13px;padding:9px 18px;background:transparent;border:1px solid var(--acc);color:var(--acc)}
+.btn-web:hover:not(:disabled){background:var(--adim)}
+.btn-copy{font-size:11px;padding:7px 14px;background:transparent;border:1px solid var(--bright);color:var(--mu2)}
+.btn-copy:hover{border-color:var(--acc);color:var(--acc)}
+.btn-add{font-size:14px;padding:7px 14px;background:var(--acc);color:#000}
+.btn-add:hover:not(:disabled){background:#fff}
+.btn-danger{font-size:11px;padding:5px 10px;background:transparent;border:none;color:var(--mu);cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px}
+.btn-danger:hover{color:var(--acc2)}
+
+.result-col{display:flex;flex-direction:column;gap:16px}
+.roll-box{background:var(--surf);border:1px solid var(--border);border-radius:3px;padding:22px}
+
+.status-msg{text-align:center;padding:18px;font-size:11px;color:var(--mu);line-height:1.6}
+.status-msg.loading{color:var(--acc)}
+.status-msg.error{color:var(--acc2)}
+.status-msg.hidden{display:none}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.game-card{background:var(--surf);border:1px solid var(--border);border-radius:3px;overflow:hidden;animation:slideUp .25s ease}
+.card-top{display:grid;grid-template-columns:110px 1fr}
+.game-thumb{width:110px;height:110px;object-fit:cover;display:block;background:var(--card)}
+.game-thumb-ph{width:110px;height:110px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:36px}
+.game-info{padding:14px 18px}
+.game-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--tx);line-height:1.15;margin-bottom:4px}
+.game-creator{font-size:10px;color:var(--mu2);margin-bottom:8px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:10px;letter-spacing:.5px;padding:3px 9px;border-radius:2px;background:var(--card);border:1px solid var(--border);color:var(--mu2)}
+.pill.hi{border-color:var(--acc);color:var(--acc)}
+.pill.ok{border-color:var(--ok);color:var(--ok)}
+.card-desc{padding:11px 18px;font-size:11px;color:var(--mu2);line-height:1.65;border-top:1px solid var(--border);max-height:72px;overflow:hidden}
+.like-wrap{padding:9px 18px;border-top:1px solid var(--border)}
+.like-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--mu2);margin-bottom:4px;letter-spacing:.5px}
+.like-track{height:3px;background:var(--card);border-radius:2px;overflow:hidden}
+.like-fill{height:100%;background:var(--ok);border-radius:2px;transition:width 1s ease}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border)}
+.stat{padding:10px;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-val{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--acc)}
+.stat-lbl{font-size:8px;letter-spacing:1.5px;color:var(--mu);text-transform:uppercase;margin-top:2px}
+.card-actions{padding:12px 18px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px}
+
+.toggle-group{display:flex;flex-direction:column;gap:0}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-lbl{font-size:11px;color:var(--tx);line-height:1.4}
+.toggle-sub{font-size:9px;color:var(--mu);margin-top:2px}
+.tog{width:34px;height:18px;background:var(--bright);border-radius:9px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none}
+.tog.on{background:var(--acc)}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .18s}
+.tog.on::after{transform:translateX(16px)}
+
+.add-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:6px}
+.add-input{background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--tx);font-family:'Space Mono',monospace;font-size:11px;padding:8px 12px;outline:none;transition:border-color .2s;width:100%}
+.add-input:focus{border-color:var(--acc);box-shadow:0 0 0 2px var(--adim)}
+.add-error{font-size:10px;color:var(--acc2);margin-top:4px;min-height:15px}
+
+.list-items{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.list-item{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;padding:9px 11px;background:var(--card);border:1px solid var(--border);border-radius:2px}
+.list-item img{width:38px;height:38px;border-radius:2px;object-fit:cover;background:var(--surf)}
+.list-item-name{font-size:12px;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list-item-id{font-size:9px;color:var(--mu);margin-top:2px}
+.empty-list{text-align:center;padding:26px;color:var(--mu);font-size:11px;border:1px dashed var(--border);border-radius:2px;margin-top:14px;line-height:1.7}
+.list-count{font-size:9px;color:var(--mu);letter-spacing:1px;margin-bottom:10px}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--surf)}
+::-webkit-scrollbar-thumb{background:var(--bright);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--acc)}
+
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:.4}
+
+.copied-toast{position:fixed;bottom:24px;right:24px;background:var(--acc);color:#000;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:2px;font-size:13px;padding:10px 20px;border-radius:2px;z-index:10000;opacity:0;transform:translateY(10px);transition:all .2s;pointer-events:none}
+.copied-toast.show{opacity:1;transform:translateY(0)}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(0,200,255,.3);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+
+.reveal-banner{background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:2px;padding:10px 16px;margin-bottom:10px;font-size:12px;color:var(--acc);display:flex;align-items:center;gap:8px}
+.reveal-banner .game-reveal-name{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700}
+
+.sep{height:1px;background:var(--border);margin:14px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">RBX<span>Jump</span></div>
+    <div class="tagline">Roblox Random Game Launcher — No Setup Required</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('discover')">Discover</button>
+    <button class="tab-btn" onclick="switchTab('mylist')">My List</button>
+  </div>
+
+  <div id="tab-discover" class="tab-pane active">
+    <div class="layout">
+      <div class="panel">
+        <div class="panel-title">
+          Filters
+          <button class="reset-btn" onclick="resetFilters()">Reset</button>
+        </div>
+        <div class="field">
+          <label>Keyword / Game Name</label>
+          <input type="text" id="f-keyword" placeholder="e.g. obby, horror, tycoon">
+        </div>
+        <div class="field">
+          <label>Genre</label>
+          <select id="f-genre">
+            <option value="">All Genres</option>
+            <option value="7">Adventure</option>
+            <option value="2">Horror / Scary</option>
+            <option value="3">Town & City</option>
+            <option value="6">Fantasy</option>
+            <option value="10">FPS</option>
+            <option value="11">RPG</option>
+            <option value="12">Sports</option>
+            <option value="8">Sci-Fi</option>
+            <option value="5">Comedy / Funny</option>
+            <option value="4">War</option>
+            <option value="9">Pirate</option>
+            <option value="13">Ninja</option>
+            <option value="1">Tutorial</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Active Players (range)</label>
+          <div class="range-row">
+            <input type="number" id="f-min-players" placeholder="Min" min="0">
+            <input type="number" id="f-max-players" placeholder="Max" min="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Min. Total Visits</label>
+          <input type="text" id="f-min-visits" placeholder="e.g. 1M, 500K, 1B">
+          <div class="field-note">Supports K / M / B suffixes</div>
+        </div>
+        <div class="field">
+          <label>Min. Like Ratio (%)</label>
+          <input type="number" id="f-min-like" placeholder="e.g. 80" min="0" max="100">
+        </div>
+        <div class="field">
+          <label>Max Players Per Server</label>
+          <input type="number" id="f-max-server" placeholder="e.g. 20" min="1">
+        </div>
+        <div class="field">
+          <label>Randomness Level</label>
+          <select id="f-randomness">
+            <option value="1">Low — Top Popular Games</option>
+            <option value="2" selected>Medium — Broader Pool</option>
+            <option value="4">High — Deep Discovery</option>
+            <option value="8">Wild — Anything Goes</option>
+          </select>
+          <div class="field-note">Higher = more obscure results possible</div>
+        </div>
+      </div>
+
+      <div class="result-col">
+        <div class="roll-box">
+          <button class="btn btn-roll" id="btn-discover" onclick="discoverGame()">
+            <span id="discover-btn-icon">⚄</span> Roll Random Game
+          </button>
+          <div class="status-msg hidden" id="discover-status"></div>
+        </div>
+        <div id="discover-result" class="hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-mylist" class="tab-pane">
+    <div class="layout">
+      <div class="panel">
+        <div class="panel-title">Options</div>
+        <div class="toggle-group">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-lbl">Reveal picked game</div>
+              <div class="toggle-sub">Show name + stats after roll</div>
+            </div>
+            <button class="tog on" id="tog-reveal" onclick="toggleOpt('reveal')"></button>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-lbl">Remove after picking</div>
+              <div class="toggle-sub">Deletes game from list</div>
+            </div>
+            <button class="tog" id="tog-remove" onclick="toggleOpt('remove')"></button>
+          </div>
+        </div>
+        <div class="sep"></div>
+        <div class="panel-title" style="margin-bottom:10px">Add Game</div>
+        <div class="add-row">
+          <input class="add-input" id="list-add-input" placeholder="URL or Place ID" onkeydown="if(event.key==='Enter')addGame()">
+          <button class="btn btn-add" id="btn-add-game" onclick="addGame()">Add</button>
+        </div>
+        <div class="add-error" id="add-error"></div>
+        <div class="field-note" style="margin-top:6px">Paste roblox.com/games/... URL or just the numeric ID</div>
+      </div>
+
+      <div class="result-col">
+        <div class="roll-box">
+          <div class="list-count" id="list-count">0 games in list</div>
+          <button class="btn btn-roll" id="btn-list-roll" onclick="rollList()">
+            <span>⚄</span> Roll from My List
+          </button>
+          <div class="status-msg hidden" id="list-status"></div>
+        </div>
+        <div id="list-items-box">
+          <div class="empty-list" id="list-empty">No games yet.<br>Add some using the panel on the left!</div>
+          <div class="list-items" id="list-items" style="display:none"></div>
+        </div>
+        <div id="list-result" class="hidden"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="copied-toast" id="toast">Copied!</div>
+
+<script>
+const ROPROXY = 'https://games.roproxy.com';
+const ROPROXY_THUMB = 'https://thumbnails.roproxy.com';
+const ROPROXY_APIS = 'https://apis.roproxy.com';
+
+let customList = [];
+let listOpts = { reveal: true, remove: false };
+let activeTab = 'discover';
+
+function loadStorage() {
+  try {
+    const l = localStorage.getItem('rbxjump_list');
+    if (l) customList = JSON.parse(l);
+    const o = localStorage.getItem('rbxjump_opts');
+    if (o) listOpts = JSON.parse(o);
+  } catch {}
+}
+
+function saveList() {
+  localStorage.setItem('rbxjump_list', JSON.stringify(customList));
+}
+
+function saveOpts() {
+  localStorage.setItem('rbxjump_opts', JSON.stringify(listOpts));
+}
+
+function switchTab(name) {
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', (i === 0 && name === 'discover') || (i === 1 && name === 'mylist'));
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + (name === 'discover' ? 'discover' : 'mylist')).classList.add('active');
+}
+
+function toggleOpt(key) {
+  listOpts[key] = !listOpts[key];
+  document.getElementById('tog-' + key).classList.toggle('on', listOpts[key]);
+  saveOpts();
+}
+
+function applyOpts() {
+  document.getElementById('tog-reveal').classList.toggle('on', listOpts.reveal);
+  document.getElementById('tog-remove').classList.toggle('on', listOpts.remove);
+}
+
+function resetFilters() {
+  ['f-keyword', 'f-min-players', 'f-max-players', 'f-min-visits', 'f-min-like', 'f-max-server'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-genre').value = '';
+  document.getElementById('f-randomness').value = '2';
+}
+
+function getFilters() {
+  return {
+    keyword: document.getElementById('f-keyword').value.trim(),
+    genre: document.getElementById('f-genre').value,
+    minPlayers: parseInt(document.getElementById('f-min-players').value) || 0,
+    maxPlayers: parseInt(document.getElementById('f-max-players').value) || Infinity,
+    minVisits: parseShorthand(document.getElementById('f-min-visits').value),
+    minLike: parseInt(document.getElementById('f-min-like').value) || 0,
+    maxServer: parseInt(document.getElementById('f-max-server').value) || Infinity,
+    randomness: parseInt(document.getElementById('f-randomness').value) || 2,
+  };
+}
+
+function parseShorthand(val) {
+  if (!val) return 0;
+  const s = val.toString().trim().toUpperCase();
+  if (s.endsWith('B')) return parseFloat(s) * 1e9;
+  if (s.endsWith('M')) return parseFloat(s) * 1e6;
+  if (s.endsWith('K')) return parseFloat(s) * 1e3;
+  return parseInt(s) || 0;
+}
+
+function fmtNum(n) {
+  if (!n || n === 0) return '0';
+  if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+  return String(Math.round(n));
+}
+
+function likeRatio(up, down) {
+  const t = (up || 0) + (down || 0);
+  if (t === 0) return null;
+  return Math.round(((up || 0) / t) * 100);
+}
+
+function extractPlaceId(input) {
+  const s = input.trim();
+  if (/^\d+$/.test(s)) return s;
+  const m = s.match(/roblox\.com\/games\/(\d+)/);
+  if (m) return m[1];
+  return null;
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+async function apiFetch(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+async function fetchList(keyword, genre, offset) {
+  const p = new URLSearchParams();
+  if (keyword) p.set('model.keyword', keyword);
+  if (genre) p.set('model.genreFilter', genre);
+  p.set('model.maxRows', '100');
+  p.set('model.startRows', String(offset));
+  const d = await apiFetch(`${ROPROXY}/v1/games/list?${p}`);
+  return d.games || [];
+}
+
+async function fetchDetails(universeIds) {
+  const d = await apiFetch(`${ROPROXY}/v1/games?universeIds=${universeIds.join(',')}`);
+  return d.data || [];
+}
+
+async function fetchThumb(universeId) {
+  try {
+    const d = await apiFetch(`${ROPROXY_THUMB}/v1/games/icons?universeIds=${universeId}&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`);
+    return d.data?.[0]?.imageUrl || null;
+  } catch { return null; }
+}
+
+async function fetchUniverseId(placeId) {
+  const d = await apiFetch(`${ROPROXY_APIS}/universes/v1/places/${placeId}/universe`);
+  return d.universeId;
+}
+
+function setStatus(target, msg, type) {
+  const el = document.getElementById(target + '-status');
+  if (!msg) { el.className = 'status-msg hidden'; return; }
+  el.className = 'status-msg ' + type;
+  el.innerHTML = type === 'loading' ? `<span class="spinner"></span> ${esc(msg)}` : esc(msg);
+}
+
+function setDiscoverLoading(on) {
+  const btn = document.getElementById('btn-discover');
+  btn.disabled = on;
+  document.getElementById('discover-btn-icon').textContent = on ? '' : '⚄';
+  if (on) document.getElementById('discover-btn-icon').innerHTML = '<span class="spinner"></span>';
+}
+
+function renderCard(targetId, game, revealedName) {
+  const ratio = likeRatio(game.totalUpVotes, game.totalDownVotes);
+  const thumbHtml = game.thumbnail
+    ? `<img class="game-thumb" src="${esc(game.thumbnail)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
+  const thumbPh = `<div class="game-thumb-ph" ${game.thumbnail ? 'style="display:none"' : ''}>🎮</div>`;
+
+  const statsRow = `
+    <div class="stats-row">
+      <div class="stat"><div class="stat-val">${fmtNum(game.playerCount)}</div><div class="stat-lbl">Playing</div></div>
+      <div class="stat"><div class="stat-val">${fmtNum(game.visits)}</div><div class="stat-lbl">Visits</div></div>
+      <div class="stat"><div class="stat-val">${game.maxPlayers || '?'}</div><div class="stat-lbl">Max/Server</div></div>
+      <div class="stat"><div class="stat-val">${fmtNum(game.favoritedCount)}</div><div class="stat-lbl">Favorites</div></div>
+    </div>`;
+
+  const likeBar = ratio !== null ? `
+    <div class="like-wrap">
+      <div class="like-labels"><span>👍 ${fmtNum(game.totalUpVotes)}</span><span>${ratio}% Positive</span><span>👎 ${fmtNum(game.totalDownVotes)}</span></div>
+      <div class="like-track"><div class="like-fill" style="width:${ratio}%"></div></div>
+    </div>` : '';
+
+  const appLink = `roblox://experiences/start?placeId=${game.placeId}`;
+  const webLink = `https://www.roblox.com/games/${game.placeId}/`;
+
+  const revealBanner = revealedName
+    ? `<div class="reveal-banner">🎯 Picked: <span class="game-reveal-name">${esc(revealedName)}</span></div>`
+    : '';
+
+  const html = `
+    ${revealBanner}
+    <div class="game-card">
+      <div class="card-top">
+        ${thumbHtml}${thumbPh}
+        <div class="game-info">
+          <div class="game-name">${esc(game.name)}</div>
+          ${game.creatorName ? `<div class="game-creator">by ${esc(game.creatorName)}</div>` : ''}
+          <div class="pills">
+            <span class="pill hi">👥 ${fmtNum(game.playerCount)} online</span>
+            ${game.maxPlayers ? `<span class="pill">👤 max ${game.maxPlayers}</span>` : ''}
+            ${ratio !== null ? `<span class="pill ok">⭐ ${ratio}%</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${game.description ? `<div class="card-desc">${esc(game.description)}</div>` : ''}
+      ${statsRow}
+      ${likeBar}
+      <div class="card-actions">
+        <a href="${esc(appLink)}" class="btn btn-roblox">🚀 Open in App</a>
+        <a href="${esc(webLink)}" target="_blank" class="btn btn-web">🌐 Browser</a>
+        <button class="btn btn-copy" onclick="copyText('${esc(appLink)}')">📋 App Link</button>
+        <button class="btn btn-copy" onclick="copyText('${esc(webLink)}')">📋 URL</button>
+      </div>
+    </div>`;
+
+  const el = document.getElementById(targetId);
+  el.innerHTML = html;
+  el.classList.remove('hidden');
+}
+
+async function discoverGame() {
+  const filters = getFilters();
+  setDiscoverLoading(true);
+  document.getElementById('discover-result').classList.add('hidden');
+
+  const maxOff = filters.randomness * 150;
+  let candidates = [];
+  let attempts = 0;
+
+  try {
+    while (candidates.length === 0 && attempts < 3) {
+      const offset = Math.floor(Math.random() * maxOff);
+      setStatus('discover', `Searching games… (attempt ${attempts + 1})`, 'loading');
+      const games = await fetchList(filters.keyword, filters.genre, offset);
+      if (games.length === 0 && attempts === 0) {
+        setStatus('discover', 'No games returned by the API. Try different filters.', 'error');
+        return;
+      }
+      candidates = games.filter(g => {
+        const active = g.playerCount || 0;
+        const ratio = likeRatio(g.totalUpVotes, g.totalDownVotes);
+        const ratioOk = ratio === null || ratio >= filters.minLike;
+        return active >= filters.minPlayers && active <= filters.maxPlayers && ratioOk;
+      });
+      attempts++;
+    }
+
+    if (candidates.length === 0) {
+      setStatus('discover', 'No games match your filters. Try loosening them!', 'error');
+      return;
+    }
+
+    let final = candidates;
+
+    if (filters.minVisits > 0 || filters.maxServer < Infinity) {
+      setStatus('discover', 'Fetching detailed game info…', 'loading');
+      const batch = candidates.slice(0, 30);
+      const uids = batch.map(g => g.universeId);
+      const details = await fetchDetails(uids);
+      const dm = {};
+      details.forEach(d => { dm[d.id] = d; });
+      final = batch
+        .filter(g => {
+          const d = dm[g.universeId];
+          if (!d) return filters.minVisits === 0;
+          const visOk = (d.visits || 0) >= filters.minVisits;
+          const srvOk = filters.maxServer >= Infinity || (d.maxPlayers || 999) <= filters.maxServer;
+          return visOk && srvOk;
+        })
+        .map(g => ({ ...g, _detail: dm[g.universeId] }));
+
+      if (final.length === 0) {
+        setStatus('discover', 'No games match all your filters. Try loosening them!', 'error');
+        return;
+      }
+    }
+
+    const picked = final[Math.floor(Math.random() * final.length)];
+    setStatus('discover', 'Loading game details…', 'loading');
+
+    let detail = picked._detail;
+    if (!detail) {
+      const details = await fetchDetails([picked.universeId]);
+      detail = details[0];
+    }
+
+    const thumb = await fetchThumb(picked.universeId);
+    setStatus('discover', '', '');
+
+    renderCard('discover-result', {
+      placeId: String(picked.placeId),
+      universeId: String(picked.universeId),
+      name: picked.name || 'Unknown Game',
+      description: picked.gameDescription || detail?.description || '',
+      playerCount: picked.playerCount || detail?.playing || 0,
+      visits: detail?.visits || 0,
+      maxPlayers: detail?.maxPlayers || 0,
+      favoritedCount: detail?.favoritedCount || 0,
+      totalUpVotes: picked.totalUpVotes || 0,
+      totalDownVotes: picked.totalDownVotes || 0,
+      creatorName: picked.creatorName || detail?.creator?.name || '',
+      thumbnail: thumb,
+    }, null);
+
+  } catch (err) {
+    setStatus('discover', 'API error: ' + err.message + '. roproxy.com might be down, try again.', 'error');
+  } finally {
+    setDiscoverLoading(false);
+  }
+}
+
+async function addGame() {
+  const input = document.getElementById('list-add-input').value;
+  const placeId = extractPlaceId(input);
+  const errEl = document.getElementById('add-error');
+  errEl.textContent = '';
+
+  if (!placeId) {
+    errEl.textContent = 'Invalid URL or Place ID';
+    return;
+  }
+  if (customList.some(g => g.placeId === placeId)) {
+    errEl.textContent = 'Already in list';
+    return;
+  }
+
+  const btn = document.getElementById('btn-add-game');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const uid = await fetchUniverseId(placeId);
+    const details = await fetchDetails([uid]);
+    const detail = details[0];
+    if (!detail) throw new Error('Game not found');
+    const thumb = await fetchThumb(uid);
+
+    customList.push({
+      placeId,
+      universeId: String(uid),
+      name: detail.name,
+      thumbnail: thumb,
+    });
+    saveList();
+    document.getElementById('list-add-input').value = '';
+    renderListItems();
+  } catch (err) {
+    errEl.textContent = 'Error: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Add';
+  }
+}
+
+function removeGame(placeId) {
+  customList = customList.filter(g => g.placeId !== placeId);
+  saveList();
+  renderListItems();
+}
+
+function renderListItems() {
+  const container = document.getElementById('list-items');
+  const empty = document.getElementById('list-empty');
+  const countEl = document.getElementById('list-count');
+
+  countEl.textContent = customList.length + ' game' + (customList.length !== 1 ? 's' : '') + ' in list';
+
+  if (customList.length === 0) {
+    empty.style.display = '';
+    container.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  container.style.display = 'flex';
+  container.innerHTML = customList.map(g => `
+    <div class="list-item">
+      ${g.thumbnail ? `<img src="${esc(g.thumbnail)}" alt="" onerror="this.style.visibility='hidden'">` : '<div style="width:38px;height:38px;background:var(--surf);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:18px">🎮</div>'}
+      <div>
+        <div class="list-item-name">${esc(g.name)}</div>
+        <div class="list-item-id">ID: ${esc(g.placeId)}</div>
+      </div>
+      <button class="btn-danger" onclick="removeGame('${esc(g.placeId)}')">✕</button>
+    </div>`).join('');
+}
+
+async function rollList() {
+  if (customList.length === 0) {
+    setStatus('list', 'Your list is empty! Add some games first.', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('btn-list-roll');
+  btn.disabled = true;
+  document.getElementById('list-result').classList.add('hidden');
+
+  const idx = Math.floor(Math.random() * customList.length);
+  const picked = { ...customList[idx] };
+
+  if (listOpts.remove) {
+    customList.splice(idx, 1);
+    saveList();
+    renderListItems();
+  }
+
+  if (!listOpts.reveal) {
+    window.location.href = `roblox://experiences/start?placeId=${picked.placeId}`;
+    setStatus('list', 'Launched! (Reveal is off — you\'re flying blind)', '');
+    btn.disabled = false;
+    return;
+  }
+
+  setStatus('list', 'Loading game details for ' + picked.name + '…', 'loading');
+
+  try {
+    const details = await fetchDetails([picked.universeId]);
+    const detail = details[0];
+    const thumb = await fetchThumb(picked.universeId);
+
+    setStatus('list', '', '');
+    renderCard('list-result', {
+      placeId: picked.placeId,
+      universeId: picked.universeId,
+      name: picked.name,
+      description: detail?.description || '',
+      playerCount: detail?.playing || 0,
+      visits: detail?.visits || 0,
+      maxPlayers: detail?.maxPlayers || 0,
+      favoritedCount: detail?.favoritedCount || 0,
+      totalUpVotes: 0,
+      totalDownVotes: 0,
+      creatorName: detail?.creator?.name || '',
+      thumbnail: thumb || picked.thumbnail,
+    }, picked.name);
+  } catch (err) {
+    setStatus('list', '', '');
+    renderCard('list-result', {
+      placeId: picked.placeId,
+      universeId: picked.universeId,
+      name: picked.name,
+      description: '',
+      playerCount: 0,
+      visits: 0,
+      maxPlayers: 0,
+      favoritedCount: 0,
+      totalUpVotes: 0,
+      totalDownVotes: 0,
+      thumbnail: picked.thumbnail,
+    }, picked.name);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+loadStorage();
+applyOpts();
+renderListItems();
+</script>
+</body>
+</html>

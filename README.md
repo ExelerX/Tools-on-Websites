@@ -29,6 +29,8 @@
 
 #### [Combined](https://exelerx.github.io/Tools-on-Websites/Roblox/Combined/rbx-jump_beta.html)
 
+`Bugs: Some`
+
 #### [Instant game join link Generator](https://exelerx.github.io/Tools-on-Websites/Roblox/Join%20Game%20Link/index.html)
 
 `Bugs: None or Unknown`
